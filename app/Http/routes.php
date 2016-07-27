@@ -33,6 +33,10 @@ Route::get('auth/login/{routing_id?}', 'HomeController@index');
 Route::post('auth/login/{routing_id?}', '\App\Http\Controllers\Auth\AuthController@postLogin');
 Route::get('logout', '\App\Http\Controllers\Auth\AuthController@getLogout');
 
+
+//Resident login
+Route::get('resident/home', '\App\Http\Controllers\Resident\HomeController@home');
+
 Route::group(['middleware' => ['auth']], function()
 {
 	// Phone App Notification Routes
