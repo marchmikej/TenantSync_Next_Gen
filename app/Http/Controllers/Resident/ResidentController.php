@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\Resident;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\AuthManager as Auth;
@@ -12,7 +12,7 @@ use TenantSync\Models\User;
 use TenantSync\Mutators\PropertyMutator;
 use Response;
 
-class HomeController extends Controller {
+class ResidentController extends Controller {
 
 	public function index(Auth $auth)
 	{
