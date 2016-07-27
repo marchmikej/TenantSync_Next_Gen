@@ -35,7 +35,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\AuthController@getLogout');
 
 
 //Resident login
-Route::get('resident/home', '\App\Http\Controllers\Resident\HomeController@home');
+Route::get('resident/home', '\App\Http\Controllers\Resident\ResidentController@home');
 
 Route::group(['middleware' => ['auth']], function()
 {
