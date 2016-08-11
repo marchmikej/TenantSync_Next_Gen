@@ -23,6 +23,13 @@ class Transaction extends Model {
 		'date',
 		'payable_type',
 		'payable_id',
+        'property_id',
+        'payment_from_id',
+        'payment_from_source',
+        'payment_from_unit',
+        'status',
+        'payment_type',
+        'transaction_fee',
 		];
 
     protected $dates = ['deleted_at'];
@@ -31,6 +38,10 @@ class Transaction extends Model {
 	{
 		return $this->belongsTo('TenantSync\Models\User');
 	}
+
+    public function getUser() {
+        return User::find($this->payment_from_id);
+    }
 
 	public function payable()
 	{
@@ -93,5 +104,9 @@ class Transaction extends Model {
     public function rentPayments()
     {
     	return \DB::table('rent_payments')->where(['transaction_id' => $this->id])->get();
+    }
+
+    public function getTypesArrary() {
+        return json_decode($this->description,true);
     }
 }

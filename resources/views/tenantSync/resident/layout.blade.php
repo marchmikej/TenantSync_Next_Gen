@@ -1,8 +1,16 @@
 @extends('TenantSync::bare')
+@include('TenantSync::globals')
 
 @section('topmenu')
 
-<li><a href="/{{Auth::user()->role}}/calendar">Some Link</a></li>
+<li><a href="/resident/transactions">Transactions</a></li>
+<li><a href="/resident/deposits">Deposits</a></li>
+<li><a href="/resident/choosepaymentlocation">Make Payment</a></li>
+@if(Auth::user()->role ==  'landlord' || Auth::user()->role ==  'manager')
+	<li><a href="/resident/devices">Units</a></li>
+	<li><a href="/resident/properties">Properties</a></li>
+	<li><a href="/resident/residents">Residents</a></li>
+@endif
 
 			<li class="dropdown">
 				<a 

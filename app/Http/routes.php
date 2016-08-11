@@ -2,8 +2,8 @@
 
 Route::get('test', 'HomeController@test');
 
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+Route::get('/', '\App\Http\Controllers\Resident\ResidentController@home');
+Route::get('/home', '\App\Http\Controllers\Resident\ResidentController@home');
 
 
 // Tenant/Device routes
@@ -35,6 +35,17 @@ Route::get('logout', '\App\Http\Controllers\Auth\AuthController@getLogout');
 
 //Resident login
 Route::get('resident/home', '\App\Http\Controllers\Resident\ResidentController@home');
+Route::get('resident/transactions', '\App\Http\Controllers\Resident\TransactionController@home');
+Route::get('resident/deposits', '\App\Http\Controllers\Resident\DepositController@home');
+Route::get('resident/properties', '\App\Http\Controllers\Resident\PropertyController@home');
+Route::get('resident/devices', '\App\Http\Controllers\Resident\DeviceController@home');
+Route::get('resident/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
+Route::get('resident/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\PaymentController@chooseAmount');
+Route::post('resident/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
+Route::post('resident/accountinfo', '\App\Http\Controllers\Resident\PaymentController@accountInfo');
+Route::post('resident/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@reviewPayment');
+Route::post('resident/submitpayment', '\App\Http\Controllers\Resident\PaymentController@submitPayment');
+Route::get('resident/residents', '\App\Http\Controllers\Resident\ResidentController@displayResidents');
 
 Route::group(['middleware' => ['auth']], function()
 {

@@ -4,7 +4,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Events\DeviceUpdateMaintenance;
 use TenantSync\Models\Device;
-use TenantSync\Models\UserProperty;
 use TenantSync\Models\OverdueUsage;
 use TenantSync\Models\OverdueType;
 use TenantSync\Models\Property;
@@ -12,30 +11,26 @@ use TenantSync\Models\User;
 use App\Http\Controllers\Auth;
 use TenantSync\Mutators\PropertyMutator;use Response;
 
-use DB;
+use TenantSync\Models\Manager;
+use TenantSync\Mutators\DeviceMutator;
+use App\Http\Controllers\Manager\ManagerBaseController;
 
 
-class ResidentController extends Controller {
+class PropertyController extends ManagerBaseController {
     
 public function __construct()
     {
-    	parent::__construct();
         $this->middleware('auth');
+    	parent::__construct();
     }
 
 	public function home()
     {
-    	// Base resident view
-		return view('TenantSync::resident.index');		
-    }
+    	$devices = $this->user->manager->devices()->toArray();
 
-	public function displayResidents()
-    {
-        $devices = $this->user->devices;
-        //$resident =  $devices[0]->residents;
-        //return $resident[0]->user;
-    	// Base resident view
-		return view('TenantSync::resident.resident', compact('devices'));		
+		$manager = $this->user->manager;
+
+		return view('TenantSync::resident/properties', compact('devices', 'manager'));	
     }
 
 }  

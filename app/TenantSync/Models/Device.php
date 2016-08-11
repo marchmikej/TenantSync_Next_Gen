@@ -61,6 +61,10 @@ class Device extends Model {
 		return $this->belongsTo('TenantSync\Models\Property');
 	}
 
+	public function residents() {
+		return $this->hasMany('TenantSync\Models\UserProperty');	
+	}
+
 	public function maintenanceRequests()
 	{
 		return $this->hasMany('TenantSync\Models\MaintenanceRequest');

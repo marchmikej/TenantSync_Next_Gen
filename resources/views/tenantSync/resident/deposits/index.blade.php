@@ -1,0 +1,47 @@
+@extends('TenantSync::resident/layout')
+
+@section('content')
+
+<div id="profile" class="row card" v-cloak>
+
+	<div class="col-sm-12">
+		<div>
+			<div class="card-header">
+				<h4>Deposits</h4>
+			</div>
+
+			<table class="table">
+			  <thead class="thead-default">
+			    <tr>
+			      <th>Initiated Date</th>
+			      <th>Address</th>
+			      <th>Resident</th>
+			      <th>Payment For</th>
+			      <th>Amount</th>
+			      <th>Type</th>
+			      <th>Status</th>
+			      <th>Reference Number</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  	@foreach ($transactions as $transaction)
+			  		@foreach ($transaction->getTypesArrary() as $key => $value)
+    				<tr>
+				      <td>{{$transaction->date}}</td>
+				      <td>{{$transaction->address()}}</td>
+				      <td>{{$transaction->getUser()->id}}</td>
+				      <td>{{$key}}</td>
+				      <td>{{money_format("$%i",$value)}}</td>
+				      <td>{{$transaction->payment_type}}</td>
+				      <td>{{$transaction->status}}</td>
+				      <td>{{$transaction->reference_number}}</td>
+			    	</tr>
+			    	@endforeach
+				@endforeach
+			  </tbody>
+			</table>
+			
+		</div>
+	</div>
+</div>
+@endsection
