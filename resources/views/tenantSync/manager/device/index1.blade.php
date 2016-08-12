@@ -1,4 +1,4 @@
-@extends('TenantSync::manager/layout')
+@extends('TenantSync::resident/layout')
 @section('heading')
 <h4 class="text-primary"><strong>Property Manager</strong></h4>
 @endsection

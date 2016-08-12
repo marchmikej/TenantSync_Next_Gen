@@ -1,4 +1,4 @@
-@extends('TenantSync::manager/layout')
+@extends('TenantSync::resident/layout')
 
 @section('content')
 <div id="device">
