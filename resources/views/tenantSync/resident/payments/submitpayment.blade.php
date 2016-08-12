@@ -17,7 +17,7 @@
 			<thead>
 				@if($paymentResponse['Result'] != "Approved")
 				    <tr>
-						<td>Payment For</td>
+						<td>Error Code</td>
 						<td>{{$paymentResponse['Error']}}</td>
 					</tr>
 				@endif
