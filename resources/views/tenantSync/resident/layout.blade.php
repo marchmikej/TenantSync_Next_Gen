@@ -9,8 +9,8 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Payments</span></a>
     <ul class="dropdown-menu">
         <li><a href="/resident/choosepaymentlocation">One Time Payment</a></li>
-        <li><a href="/resdident/createautopayment">Create Auto Payment</a></li>
-        <li><a href="/resdident/viewautopayment">View Auto Payments</a></li>
+        <li><a href="/resident/createautopayment">Create Auto Payment</a></li>
+        <li><a href="/resident/viewautopayment">View Auto Payments</a></li>
     </ul>
 </li>
 @if(Auth::user()->role ==  'landlord' || Auth::user()->role ==  'manager')
@@ -18,21 +18,21 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Units</span></a>
         <ul class="dropdown-menu">
             <li><a href="/resident/devices">View Units</a></li>
-            <li><a href="/resdident/newunit">Add Unit</a></li>
+            <li><a href="/resident/newunit">Add Unit</a></li>
         </ul>
     </li>
 	<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Properties</span></a>
         <ul class="dropdown-menu">
             <li><a href="/resident/properties">View Properties</a></li>
-            <li><a href="/resdident/newproperty">Add Property</a></li>
+            <li><a href="/resident/newproperty">Add Property</a></li>
         </ul>
     </li>
 	<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Residents</span></a>
         <ul class="dropdown-menu">
             <li><a href="/resident/residents">View Residents</a></li>
-            <li><a href="/resdident/newresident">Add Resident</a></li>
+            <li><a href="/resident/newresident">Add Resident</a></li>
         </ul>
     </li>
 @endif

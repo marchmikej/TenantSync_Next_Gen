@@ -46,6 +46,8 @@ Route::post('resident/accountinfo', '\App\Http\Controllers\Resident\PaymentContr
 Route::post('resident/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@reviewPayment');
 Route::post('resident/submitpayment', '\App\Http\Controllers\Resident\PaymentController@submitPayment');
 Route::get('resident/residents', '\App\Http\Controllers\Resident\ResidentController@displayResidents');
+Route::get('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createPropertyForm');
+Route::post('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createProperty');
 
 Route::group(['middleware' => ['auth']], function()
 {

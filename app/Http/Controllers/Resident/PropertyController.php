@@ -33,4 +33,18 @@ public function __construct()
 		return view('TenantSync::resident/properties', compact('devices', 'manager'));	
     }
 
+    public function createPropertyForm() {
+        return view('TenantSync::resident/properties/createproperty');
+    }
+
+    public function createProperty() {
+        if(\Auth::user()->role ==  'landlord') {
+            $this->input['user_id']=$this->user->id;
+        }
+        else if(\Auth::user()->role ==  'manager') {
+            $this->input->user_id=$this->user->manager();
+        }
+        $payment = Property::create($this->input);
+        return PropertyController::home();
+    }
 }  
