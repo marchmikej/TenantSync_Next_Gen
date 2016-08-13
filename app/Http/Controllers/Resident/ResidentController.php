@@ -38,4 +38,16 @@ public function __construct()
 		return view('TenantSync::resident.resident', compact('devices'));		
     }
 
+    public function createResidentForm() {
+        if(\Auth::user()->role ==  'landlord') {
+            $devices=Device::where('user_id',$this->user->id)->get();
+        }
+        else if(\Auth::user()->role ==  'manager') {
+            $devices=Device::where('id',$this->user->manager());
+        } else {
+            $devices="";
+        }
+        return view('TenantSync::resident/createresident', compact('devices'));
+    }
+
 }  

@@ -42,7 +42,7 @@ public function __construct()
             $this->input['user_id']=$this->user->id;
         }
         else if(\Auth::user()->role ==  'manager') {
-            $this->input->user_id=$this->user->manager();
+            $this->input['user_id']=$this->user->manager();
         }
         $payment = Property::create($this->input);
         return PropertyController::home();
