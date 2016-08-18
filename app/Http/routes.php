@@ -51,6 +51,9 @@ Route::post('resident/newproperty', '\App\Http\Controllers\Resident\PropertyCont
 Route::get('resident/newunit', '\App\Http\Controllers\Resident\DeviceController@createDeviceForm');
 Route::post('resident/newunit', '\App\Http\Controllers\Resident\DeviceController@createDevice');
 Route::get('resident/newresident', '\App\Http\Controllers\Resident\ResidentController@createResidentForm');
+Route::post('resident/newresident', '\App\Http\Controllers\Resident\ResidentController@createResident');
+
+Route::get('resident/test', '\App\Http\Controllers\Resident\PaymentController@test');
 
 Route::group(['middleware' => ['auth']], function()
 {

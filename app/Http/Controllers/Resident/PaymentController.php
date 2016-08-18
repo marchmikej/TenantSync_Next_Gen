@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use DB;
 
 use TenantSync\Models\Device;
+use Mail;
 
 
 class PaymentController extends Controller {
@@ -153,9 +154,9 @@ public function __construct()
         ];
 
         $payment = Transaction::create($transaction);
-        $device = Device::find(74);
+        $device = Device::find($device->id);
         $response = $device->payRent($amount+$transactionFee, array_merge($this->input, ['description' => $description]));
-
+        return $response;
         if($response->Result == "Approved") {
             $payment->reference_number = $response->RefNum;
             
@@ -173,5 +174,54 @@ public function __construct()
             'Result' => $response->Result); 
 
         return view('TenantSync::resident/payments/submitpayment', compact('paymentResponse')); 
+    }
+
+    public function test() {
+
+        $user = $this->user;
+
+        $transactions = Transaction::where('payment_from_id', $this->user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        //return view('emails/propertyreceipt', compact('transactions')); 
+
+        Mail::send('emails.propertyreceipt', ['transactions' => $transactions], function ($m) use ($user) {
+            $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+
+            $m->to($user->email)->subject('Payment Received');
+        });
+        
+        /*
+        $device = Device::find(74);
+        $response = $device->findCustomer('6102639');
+        //6102639 customer num
+
+        
+        $paymentResponse = array(
+            'CustNum' => $response->CustNum, 
+            'CustomerID' => $response->CustomerID, 
+            'Enabled' => $response->Enabled,
+            'Schedule' => $response->Schedule,
+            'NumLeft' => $response->NumLeft,
+            'Next' => $response->Next,
+            'OrderID' => $response->OrderID,
+            'SendReceipt' => $response->SendReceipt,
+            'Amount' => $response->Amount); 
+            */
+        /*
+        //This will get the status of a past transaction
+        $response = $device->getTransactionStatus('108850248');
+        //$response = $device->addCustomer();
+        $paymentResponse = array(
+            'RefNum' => $response->RefNum, 
+            'Error' => $response->Error, 
+            'ErrorCode' => $response->ErrorCode,
+            'AuthCode' => $response->AuthCode,
+            'AuthAmount' => $response->AuthAmount,
+            'Status' => $response->Status,
+            'Result' => $response->Result); 
+        */
+        return 'emailsent';
     }
 }  

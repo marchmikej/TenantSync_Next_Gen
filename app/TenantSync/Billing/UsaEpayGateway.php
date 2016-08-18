@@ -73,7 +73,11 @@ class UsaEpayGateway {
 	{	
 		$userOptions['amount'] = $amount;
 
+		//$userOptions['recurring_billing'] = false;
+
 		$transactionRequest = TransactionRequest::createWith($userOptions);
+
+		return $transactionRequest;
 
 		return $this->gateway->runTransaction($token, $transactionRequest); 
 	}
@@ -180,5 +184,56 @@ class UsaEpayGateway {
 	private function getTransactions($token, $customerId)
 	{
 		return $this->gateway->getCustomerHistory($token, $customerId);
+	}
+
+	private function getTransactionStatus($token, $refnum)
+	{
+		//return $token;
+		//echo "<br>refnum: " . $refnum . "<br>";
+		return $this->gateway->getTransactionStatus($token, $refnum);
+	}
+
+	private function addCustomer($token) {
+		$CustomerData=array(
+			'BillingAddress'=>array(
+				'FirstName'=>'Michael',
+				'LastName'=>'March',
+				'Company'=>'Acme Corp',
+				'Street'=>'1234 main st',
+				'Street2'=>'Suite #123',
+				'City'=>'Los Angeles',
+				'State'=>'CA',
+				'Zip'=>'12345',
+				'Country'=>'US',
+				'Email'=>'mitch3_333@yahoo.com',
+				'Phone'=>'333-333-3333',
+				'Fax'=>'333-333-3334'),
+			'PaymentMethods' => array(
+				array(
+		 
+							'CardNumber'=>'4000100011112224',
+							'CardExpiration'=>'0919',
+							'CardType'=>'', 'CardCode'=>'123','AvsStreet'=>'',
+							'AvsZip'=>'',
+						"MethodName"=>"My Visa",
+						"SecondarySort"=>1)
+				),
+			'CustomerID'=>'',
+			'Description'=>'Daily Bill',
+			'Enabled'=>true,
+			'Amount'=>'2.93',
+			'Tax'=>'0',
+			'Next'=>'2016-08-16',
+			'Notes'=>'Testing the soap addCustomer Function',
+			'NumLeft'=>'5',
+			'OrderID'=>'',
+			'ReceiptNote'=>'addCustomer test Created Charge',
+			'Schedule'=>'daily',
+			'SendReceipt'=>false,
+			'Source'=>'Recurring',
+			'User'=>''
+		);
+
+  		return $this->gateway->addCustomer($token,$CustomerData); 
 	}
 }

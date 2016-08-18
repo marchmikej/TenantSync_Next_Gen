@@ -10,13 +10,13 @@
 				<h4>Add Resident</h4>
 			</div>
 
-			<form class="form form-horizontal" action="/resident/newunit" method="POST">
+			<form class="form form-horizontal" action="/resident/newresident" method="POST">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			
 				<div class="form-group">
 					<label class="control-label col-sm-3">Resident Email</label>
 					<div class="col-sm-9">
-						<input class="form-control" type="text" name="location" placeholder="Email"/>
+						<input class="form-control" type="text" name="email" placeholder="Email"/>
 					</div>
 				</div>
 				<div class="form-group">

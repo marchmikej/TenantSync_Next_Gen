@@ -30,6 +30,11 @@ trait Billable {
 		return (new UsaEpayGateway($this->sourceKey(), $this->sourcePin()))->charge($amount, $options);
 	}
 
+	public function getTransactionStatus($refnum)
+	{
+		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->getTransactionStatus($refnum);
+	}
+
 	public function chargeCustomer($amount)
 	{
 		if(! $this->getCustomerId()) {
@@ -160,5 +165,13 @@ trait Billable {
 	public function sourcePin()
 	{
 		return config('usaEpay.pin');
+	}
+
+	public function addCustomer() {
+		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->addCustomer();
+	}
+
+	public function findCustomer($customer) {
+		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->getCustomer($customer);
 	}
 }

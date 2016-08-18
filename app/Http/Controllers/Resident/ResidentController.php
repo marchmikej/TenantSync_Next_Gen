@@ -50,4 +50,24 @@ public function __construct()
         return view('TenantSync::resident/createresident', compact('devices'));
     }
 
+    public function createResident() {
+        $user = User::where('email',$this->input['email'])->get();
+        if(count($user)>1) {
+            // More than 1 user this is an issue
+            $returnMessage="This email has multiple users please contact suppport";
+        } else if(count($user)==1) {
+            $userProperty=UserProperty::where('user_id',$user[0]->id)->where('device_id',$this->input['device_id'])->get();
+            if(count($userProperty)>0) {
+                // This user is already connected to this device
+                $returnMessage="This user is already a resident of this unit.";
+            } else {
+                $this->input['user_id'] = $user[0]->id;
+                UserProperty::create($this->input);
+                $returnMessage="User added to unit.";
+            }
+        } else {
+            $returnMessage="There was an error in processing.";
+        }
+        return $returnMessage;
+    }
 }  
