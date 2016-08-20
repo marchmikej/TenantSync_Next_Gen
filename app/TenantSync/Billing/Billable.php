@@ -35,6 +35,16 @@ trait Billable {
 		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->getTransactionStatus($refnum);
 	}
 
+	public function getTransactions($refnum)
+	{
+		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->getTransactions($refnum);
+	}
+
+	public function getCustomerHistory($customer)
+	{
+		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->getCustomerHistory($customer);
+	}
+
 	public function chargeCustomer($amount)
 	{
 		if(! $this->getCustomerId()) {

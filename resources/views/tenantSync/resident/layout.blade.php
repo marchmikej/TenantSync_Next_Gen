@@ -8,9 +8,9 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Payments</span></a>
     <ul class="dropdown-menu">
-        <li><a href="/resident/choosepaymentlocation">One Time Payment</a></li>
-        <li><a href="/resident/createautopayment">Create Auto Payment</a></li>
-        <li><a href="/resident/viewautopayment">View Auto Payments</a></li>
+        <li><a href="/payment/choosepaymentlocation">One Time Payment</a></li>
+        <li><a href="/autopay/choosepaymentlocation">Create Auto Payment</a></li>
+        <li><a href="/autopay/viewautopayment">View Auto Payments</a></li>
     </ul>
 </li>
 @if(Auth::user()->role ==  'landlord' || Auth::user()->role ==  'manager')
@@ -49,7 +49,7 @@
 				</a>
 				
 			  	<ul class="dropdown-menu nav-dropdown" aria-labelledby="dropdownMenu1">
-			    	<li><a href="/{{Auth::user()->role}}/profile">Profile</a></li>
+			    	<li><a href="/profile">Profile</a></li>
 
 			    	@if(Auth::user()->role ==  'landlord')
 			    	<li><a href="/{{Auth::user()->role}}/managers">Managers</a></li>

@@ -10,7 +10,7 @@
 				<h4>Payment Amount</h4>
 			</div>
 
-			<form class="form form-horizontal" action="/resident/choosepaymentmethod" method="POST">
+			<form class="form form-horizontal" action="choosepaymentmethod" method="POST">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<input type="hidden" name="property" value="{{$paymentDetails['property']}}">
 				@foreach ($paymentTypes as $paymentType)				

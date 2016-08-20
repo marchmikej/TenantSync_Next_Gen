@@ -23,7 +23,7 @@
     				<tr>
 				      <td>{{$resident->device()->address()}}</td>
 				      <td>{{$resident->device()->location}}</td>
-				      <td><a href="/resident/choosepaymentamount/{{$resident->device()->id}}">Make Payment</a></td>
+				      <td><a href="choosepaymentamount/{{$resident->device()->id}}">Make Payment</a></td>
 			    	</tr>
 				@endforeach
 			  </tbody>

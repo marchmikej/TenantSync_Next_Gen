@@ -29,7 +29,7 @@
     				<tr>
 				      	<td>{{$transaction->date}}</td>
 				      	<td>{{$transaction->address()}}</td>
-				      	<td>{{$transaction->getUser()->id}}</td>
+				      	<td>{{$transaction->getUser()->last_name . ", " . $transaction->getUser()->first_name . " " . $transaction->getUser()->middle_initial}}</td>
 				      	<td>{{$key}}</td>
 				      	<td>{{money_format("$%i",$value)}}</td>
 				      	<td>{{$transaction->payment_type}}

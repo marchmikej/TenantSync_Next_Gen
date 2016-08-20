@@ -73,11 +73,7 @@ class UsaEpayGateway {
 	{	
 		$userOptions['amount'] = $amount;
 
-		//$userOptions['recurring_billing'] = false;
-
 		$transactionRequest = TransactionRequest::createWith($userOptions);
-
-		return $transactionRequest;
 
 		return $this->gateway->runTransaction($token, $transactionRequest); 
 	}
@@ -181,7 +177,7 @@ class UsaEpayGateway {
 		return $this->gateway->updateCustomer($token, $customerId, $customer);
 	}
 
-	private function getTransactions($token, $customerId)
+	private function getCustomerHistory($token, $customerId)
 	{
 		return $this->gateway->getCustomerHistory($token, $customerId);
 	}

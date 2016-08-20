@@ -39,12 +39,6 @@ Route::get('resident/transactions', '\App\Http\Controllers\Resident\TransactionC
 Route::get('resident/deposits', '\App\Http\Controllers\Resident\DepositController@home');
 Route::get('resident/properties', '\App\Http\Controllers\Resident\PropertyController@home');
 Route::get('resident/devices', '\App\Http\Controllers\Resident\DeviceController@home');
-Route::get('resident/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
-Route::get('resident/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\PaymentController@chooseAmount');
-Route::post('resident/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
-Route::post('resident/accountinfo', '\App\Http\Controllers\Resident\PaymentController@accountInfo');
-Route::post('resident/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@reviewPayment');
-Route::post('resident/submitpayment', '\App\Http\Controllers\Resident\PaymentController@submitPayment');
 Route::get('resident/residents', '\App\Http\Controllers\Resident\ResidentController@displayResidents');
 Route::get('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createPropertyForm');
 Route::post('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createProperty');
@@ -53,7 +47,29 @@ Route::post('resident/newunit', '\App\Http\Controllers\Resident\DeviceController
 Route::get('resident/newresident', '\App\Http\Controllers\Resident\ResidentController@createResidentForm');
 Route::post('resident/newresident', '\App\Http\Controllers\Resident\ResidentController@createResident');
 
+
+//Single Payment routes
+Route::get('payment/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
+Route::get('payment/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\PaymentController@chooseAmount');
+Route::post('payment/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
+Route::post('payment/accountinfo', '\App\Http\Controllers\Resident\PaymentController@accountInfo');
+Route::post('payment/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@reviewPayment');
+Route::post('payment/submitpayment', '\App\Http\Controllers\Resident\PaymentController@submitPayment');
+
+//Auto Payment routes
+Route::get('autopay/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
+Route::get('autopay/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\PaymentController@chooseAmount');
+Route::post('autopay/choosepaymentamount/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
+Route::post('autopay/choosepaymentamount/accountinfo', '\App\Http\Controllers\Resident\PaymentController@autoPayAccountInfo');
+Route::post('autopay/choosepaymentamount/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@autoPayReviewPayment');
+
 Route::get('resident/test', '\App\Http\Controllers\Resident\PaymentController@test');
+
+//Profile Routes
+Route::get('profile', '\App\Http\Controllers\Resident\ProfileController@index');
+Route::post('profile/email', '\App\Http\Controllers\Resident\ProfileController@email');
+Route::post('profile/password', '\App\Http\Controllers\Resident\ProfileController@password');
+Route::post('profile/name', '\App\Http\Controllers\Resident\ProfileController@name');
 
 Route::group(['middleware' => ['auth']], function()
 {

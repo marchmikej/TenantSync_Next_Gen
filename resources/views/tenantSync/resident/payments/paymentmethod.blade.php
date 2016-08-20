@@ -13,7 +13,7 @@
 			Payment amount: {{money_format("$%i",$paymentDetails['amount'])}}
 		</h5>
 		
-		<form class="form form-horizontal" action="/resident/accountinfo" method="POST">
+		<form class="form form-horizontal" action="accountinfo" method="POST">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<input type="hidden" name="property" value="{{$paymentDetails['property']}}">
 			<input type="hidden" name="amount" value="{{$paymentDetails['amount']}}">

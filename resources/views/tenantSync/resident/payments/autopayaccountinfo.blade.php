@@ -7,15 +7,53 @@
 		<div class="col-sm-12">
 		<div>
 			<div class="card-header">
-				<h4>Account Details</h4>
+				<h4>Auto Pay Details</h4>
 			</div>
 
-			<form class="form form-horizontal" action="/resident/reviewpayment" method="POST">
+			<form class="form form-horizontal" action="reviewpayment" method="POST">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">	
 				<input type="hidden" name="property" value="{{$paymentDetails['property']}}">
 				<input type="hidden" name="amount" value="{{$paymentDetails['amount']}}">
 				<input type="hidden" name="paymentFor" value="{{$paymentDetails['paymentFor']}}">	
 				<input type="hidden" name="payment_type" value="{{$paymentDetails['payment_type']}}">	
+				<div class="form-group">
+					<label class="control-label col-sm-3">Auto Pay Date</label>
+					<div class="col-sm-4">
+						<div class="input-group date" data-provide="datepicker">
+    						<input type="text" class="form-control" name="auto_date">
+    						<div class="input-group-addon">
+        						<span class="glyphicon glyphicon-th"></span>
+    						</div>
+    					</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Auto Pay Frequency</label>
+					<div class="col-sm-4">
+						<select class="form-control" name="Schedule">
+							<option value="daily">Daily</option>
+							<option value="weekly">Weekly</option>
+							<option value="bi-weekly">Bi-Weekly</option>
+							<option value="monthly">Monthly</option>
+							<option value="bi-monthly">Bi-Monthly</option>
+							<option value="quarterly">Quarterly</option>
+							<option value="annually">Annually</option>
+							<option value="bi-annually">Bi-Annually</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Number Auto Pays</label>
+					<div class="col-sm-4">
+					 	<input type="checkbox" name="indefinite" value="indefinite" id="indefinite"> Indefinite
+					</div>
+				</div>	
+				<div class="form-group">
+					<label class="control-label col-sm-3"></label>
+					<div class="col-sm-4">
+						<input class="form-control" type="numeric" id="NumLeft" name="NumLeft" placeholder="Number of Payments to Make"/>
+					</div>
+				</div>			
 				@if($paymentDetails['payment_type']=='credit')	
 					<div class="form-group">
 						<label class="control-label col-sm-3">Card Holder</label>
@@ -184,5 +222,30 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('scripts')
+
+<script>
+
+
+
+$('input[name=indefinite]').change(function(){
+	var numLeft = document.getElementById("NumLeft");
+    if($(this).is(':checked'))
+    {
+        // Checkbox is checked.
+        $('input[name=NumLeft]').attr('disabled','disabled');
+    }
+    else
+    {
+        // Checkbox is not checked.
+        $('input[name=NumLeft]').removeAttr('disabled');
+    }    
+
+});
+
+</script>
+
 @endsection
 

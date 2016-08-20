@@ -28,7 +28,6 @@ class TransactionRequest extends UsaEpayObject {
 		'check' => 'CheckData',
 		'account_number' => 'CheckData',
 		'billing_address' => 'BillingAddress',
-		'recurring_billing' => 'RecurringBilling',
  	];
 
  	// Mikes Check Input

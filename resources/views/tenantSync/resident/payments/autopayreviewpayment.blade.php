@@ -6,16 +6,19 @@
 
 	<div class="col-sm-12">
 		<div class="card-header">
-			<h4>Review Payment Details</h4>
+			<h4>Review Auto Payment Details</h4>
 		</div>
 		
-		<form class="form form-horizontal" action="/resident/submitpayment" method="POST">
+		<form class="form form-horizontal" action="submitpayment" method="POST">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<input type="hidden" name="property" value="{{$paymentDetails['property']}}">
 			<input type="hidden" name="amount" value="{{$paymentDetails['amount']}}">
 			<input type="hidden" name="paymentFor" value="{{$paymentDetails['paymentFor']}}">
 			<input type="hidden" name="payment_type" value="{{$paymentDetails['payment_type']}}">
 			<input type="hidden" name="account_holder" value="{{$paymentDetails['account_holder']}}">
+			<input type="hidden" name="auto_date" value="{{$paymentDetails['auto_date']}}">
+			<input type="hidden" name="NumLeft" value="{{$paymentDetails['NumLeft']}}">
+			<input type="hidden" name="Schedule" value="{{$paymentDetails['Schedule']}}">
 			@if($paymentDetails['payment_type']=="credit")
 				<input type="hidden" name="address" value="{{$paymentDetails['address']}}">
 				<input type="hidden" name="city" value="{{$paymentDetails['city']}}">
@@ -63,7 +66,19 @@
 						@elseif($paymentDetails['payment_type']=="credit")
 						    <td>{{money_format("$%i",$paymentDetails['amount']*1.0345)}}</td>
 						@endif
-				    </tr>
+				    </tr>				   	
+				  	<tr>
+					    <td>Payment Frequency</td>
+					    <td>{{$paymentDetails['Schedule']}}</td>
+				   	</tr>
+				  	<tr>
+					    <td>First Payment Date</td>
+					    <td>{{$paymentDetails['auto_date']}}</td>
+				   	</tr>
+				   	<tr>
+					    <td>Number of payments to process</td>
+					    <td>{{$paymentDetails['NumLeft']}}</td>
+				   	</tr>					   	
 					<tr>
 					    <td>Payment Type</td>
 					    <td>{{$paymentDetails['payment_type']}}</td>
@@ -113,7 +128,7 @@
 				    @endif
 				</tbody>
 			</table>
-			<button class="btn btn-primary col-sm-3 col-sm-offset-9">Submit</button>
+			<button class="btn btn-primary col-sm-3 col-sm-offset-9">Schedule</button>
 		</form>
 	</div>
 </div>
