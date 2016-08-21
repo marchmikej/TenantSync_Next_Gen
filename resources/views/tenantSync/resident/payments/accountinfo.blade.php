@@ -176,6 +176,15 @@
 							<input class="form-control" type="numeric" name="account_number" placeholder=""/>
 						</div>
 					</div>	
+					<div class="form-group">
+						<label class="control-label col-sm-3">Account Type</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="AccountType">
+								<option value="Checking">Checking</option>
+								<option value="Savings">Savings</option>
+							</select>
+						</div>	
+					</div>
 				@endif
 
 				<button class="btn btn-primary col-sm-3 col-sm-offset-9">Submit</button>

@@ -30,6 +30,7 @@ class Transaction extends Model {
         'status',
         'payment_type',
         'transaction_fee',
+        'auto_payment_id',
 		];
 
     protected $dates = ['deleted_at'];

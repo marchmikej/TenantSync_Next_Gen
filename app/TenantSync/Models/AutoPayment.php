@@ -29,6 +29,22 @@ class AutoPayment extends Model {
 		'num_payments', 
 		'amount', 
 		'transaction_fee', 
-		'payment_type'
+		'payment_type',
+		'description'
 	];
+
+	public function device()
+	{
+		return Device::find($this->device_id);
+	}
+
+	public function transactions()
+	{
+		return $this->hasMany('TenantSync\Models\Transaction');
+	}
+
+	public function user()
+	{
+		return User::find($this->user_id);
+	}
 }

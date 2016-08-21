@@ -62,6 +62,8 @@ Route::get('autopay/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\P
 Route::post('autopay/choosepaymentamount/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
 Route::post('autopay/choosepaymentamount/accountinfo', '\App\Http\Controllers\Resident\PaymentController@autoPayAccountInfo');
 Route::post('autopay/choosepaymentamount/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@autoPayReviewPayment');
+Route::post('autopay/choosepaymentamount/submitpayment', '\App\Http\Controllers\Resident\PaymentController@autoPaysubmitPayment');
+Route::get('autopay/viewautopayment', '\App\Http\Controllers\Resident\PaymentController@viewAutoPayments');
 
 Route::get('resident/test', '\App\Http\Controllers\Resident\PaymentController@test');
 

@@ -189,7 +189,9 @@ class UsaEpayGateway {
 		return $this->gateway->getTransactionStatus($token, $refnum);
 	}
 
-	private function addCustomer($token) {
+	private function addCustomer($token, $CustomerData) {
+		return $this->gateway->addCustomer($token,$CustomerData); 
+		/*
 		$CustomerData=array(
 			'BillingAddress'=>array(
 				'FirstName'=>'Michael',
@@ -228,8 +230,6 @@ class UsaEpayGateway {
 			'SendReceipt'=>false,
 			'Source'=>'Recurring',
 			'User'=>''
-		);
-
-  		return $this->gateway->addCustomer($token,$CustomerData); 
+		);*/
 	}
 }

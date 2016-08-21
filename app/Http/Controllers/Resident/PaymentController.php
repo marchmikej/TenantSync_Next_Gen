@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use TenantSync\Models\User;
 use TenantSync\Models\Property;
+use TenantSync\Models\AutoPayment;
 use TenantSync\Models\UserProperty;
 use App\Http\Controllers\Auth;
 use TenantSync\Models\Transaction;
@@ -213,70 +214,105 @@ public function __construct()
 
     public function autoPaySubmitPayment() {
 
+        //Creating device/unit of the unit for this charge to be credited against
         $device = Device::find($this->input['property']);
 
+        $amount = $this->input['amount'];
         $transactionFee = 0;
+
+        //date format dd/mm/yyyy to yyyy-mm-dd
+        $autoDay = substr($this->input['auto_date'],0,2);
+        $autoMonth = substr($this->input['auto_date'],3,2);
+        $autoYear = substr($this->input['auto_date'],6,4);
+        $autoSend = $autoYear . "-" . $autoMonth . "-" . $autoDay;
+
+        // $payment array will hold payment information.  
 
         if($this->input['payment_type']=='credit') {
             $this->input['expiration'] = $this->input['month'] . $this->input['year'];
             $transactionFee=$this->input['amount']*0.0345;
             $this->input['amount'] = $amount + $transactionFee;  //This is the amount charged to USAEPAY
+            $paymentArray = array(
+                'CardNumber'=>$this->input['card_number'],
+                'CardExpiration'=>$this->input['expiration'],
+                'CardType'=>'', 
+                'CardCode'=>$this->input['cvv2'],
+                'AvsStreet'=>$this->input['address'],
+                'AvsZip'=>$this->input['zip_code'],
+                'MethodName'=>"Credit Card",
+                'SecondarySort'=>0
+            );
         } else if($this->input['payment_type']=='check') {
             $transactionFee=3.45;
             $this->input['amount'] = $amount + $transactionFee;  //This is the amount charged to USAEPAY
+            $paymentArray = array(
+                'Account'=>$this->input['account_number'],
+                'AccountType'=>$this->input['AccountType'],
+                'Routing'=>$this->input['routing_number'], 
+                'RecordType'=>'',
+                'MethodName'=>"Check",
+                'SecondarySort'=>0
+            );
         }  
 
         $CustomerData=array(
             'BillingAddress'=>array(
-                'FirstName'=>'Michael',
-                'LastName'=>'March',
-                'Company'=>'Acme Corp',
-                'Street'=>'1234 main st',
-                'Street2'=>'Suite #123',
-                'City'=>'Los Angeles',
-                'State'=>'CA',
-                'Zip'=>'12345',
-                'Country'=>'US',
-                'Email'=>'mitch3_333@yahoo.com',
-                'Phone'=>'333-333-3333',
-                'Fax'=>'333-333-3334'),
+                'FirstName'=>$this->user->first_name,
+                'LastName'=>$this->user->last_name,
+                'Company'=>'',
+                'Street'=>'',
+                'Street2'=>'',
+                'City'=>'',
+                'State'=>'',
+                'Zip'=>'',
+                'Country'=>'',
+                'Email'=>'',
+                'Phone'=>'',
+                'Fax'=>''),
             'PaymentMethods' => array(
-                array(
-         
-                            'CardNumber'=>'4000100011112224',
-                            'CardExpiration'=>'0919',
-                            'CardType'=>'', 'CardCode'=>'123','AvsStreet'=>'',
-                            'AvsZip'=>'',
-                        "MethodName"=>"My Visa",
-                        "SecondarySort"=>1)
+                $paymentArray
                 ),
-            'CustomerID'=>'',
-            'Description'=>'Daily Bill',
+            'CustomerID'=>$this->user->id,
+            'Description'=>'',
             'Enabled'=>true,
-            'Amount'=>'2.93',
+            'Amount'=>$this->input['amount'],
             'Tax'=>'0',
-            'Next'=>'2016-08-16',
-            'Notes'=>'Testing the soap addCustomer Function',
-            'NumLeft'=>'5',
+            'Next'=>$autoSend,
+            'Notes'=>$this->input['paymentFor'],
+            'NumLeft'=>$this->input['NumLeft'],
             'OrderID'=>'',
             'ReceiptNote'=>'addCustomer test Created Charge',
-            'Schedule'=>'daily',
+            'Schedule'=>$this->input['Schedule'],
             'SendReceipt'=>false,
             'Source'=>'Recurring',
             'User'=>''
         );      
+        // This will return the customer number of the created auto pay
+        $response = $device->addCustomer($CustomerData);
 
         $autoPayment = [
             'user_id' => $this->user->id,
             'device_id' => $device->id,
-            'customer_number' => 
-            'schedule' => $this->input['Schedule'];
-            'initial_date' => $this->input['auto_date'],
+            'customer_number' => $response,
+            'schedule' => $this->input['Schedule'],
+            'initial_date' => Carbon::createFromFormat('m/d/Y', $this->input['auto_date']),
             'num_payments' => $this->input['NumLeft'],
             'amount' => $this->input['amount'],
             'transaction_fee' => $transactionFee,
             'payment_type' => $this->input['payment_type'],
         ];  
+
+        $newAutoPayment = AutoPayment::create($autoPayment);
+
+        $newAutoPayment->save();
+
+        return $newAutoPayment;
+    }
+
+    public function viewAutoPayments() {
+        $autoPayments = AutoPayment::where('user_id', $this->user->id)->get();
+
+        return view('TenantSync::resident/viewautopays', compact('autoPayments'));          
     }
 
     public function test() {
@@ -302,7 +338,6 @@ public function __construct()
         // End email to user//
         //////////////////////
         
-        $device = Device::find(74);
         /*
         $response = $device->findCustomer('6102639');
 
@@ -318,20 +353,6 @@ public function __construct()
             'Amount' => $response->Amount); 
 */        
         //6102639 customer num
-
-        $response = $device->getCustomerHistory('6102639');
-
-        $transactionSearchResult = array(
-            'TransactionsMatched' => $response->TransactionsMatched, 
-            'TransactionsReturned' => $response->TransactionsReturned, 
-            'ErrorsCount' => $response->ErrorsCount,
-            'DeclinesCount' => $response->DeclinesCount,
-            'SalesCount' => $response->SalesCount,
-            'CreditsCount' => $response->CreditsCount,
-            'AuthOnlyCount' => $response->AuthOnlyCount,
-            'VoidsCount' => $response->VoidsCount,
-            'SalesAmount' => $response->SalesAmount); 
-
         /*
         $paymentResponse = array(
             'CustNum' => $response->CustNum, 
@@ -357,6 +378,51 @@ public function __construct()
             'Status' => $response->Status,
             'Result' => $response->Result); 
         */
-        return $response->Transactions;
+        $autoPayment=AutoPayment::where('customer_number','6114387')->first();
+        return $autoPayment->user();
+        $device=Device::find($autoPayment->device_id);
+
+        $response = $device->getCustomerHistory($autoPayment->customer_number);
+
+        $transactionSearchResult = array(
+            'TransactionsMatched' => $response->TransactionsMatched, 
+            'TransactionsReturned' => $response->TransactionsReturned, 
+            'ErrorsCount' => $response->ErrorsCount,
+            'DeclinesCount' => $response->DeclinesCount,
+            'SalesCount' => $response->SalesCount,
+            'CreditsCount' => $response->CreditsCount,
+            'AuthOnlyCount' => $response->AuthOnlyCount,
+            'VoidsCount' => $response->VoidsCount,
+            'SalesAmount' => $response->SalesAmount); 
+
+        //return $response->Transactions;
+        foreach($response->Transactions as $transaction) {
+            $currentTransaction = Transaction::where('reference_number',$transaction->Response->RefNum)->first();
+            //If count==0 then transaction is not in database.  If greater than 0 move onto next transaction
+            if(count($currentTransaction)==0) {
+                $transactionResult = array(
+                    'user_id' => $device->user_id,
+                    'amount' => $autoPayment->amount,
+                    'description' => $autoPayment->description,
+                    'reference_number' => $transaction->Response->RefNum, 
+                    'date' => $transaction->DateTime,
+                    'payable_type' => "device",
+                    'payable_id' => $device->id,
+                    'payment_from_id' => $autoPayment->user_id,
+                    'payment_from_source' => 0,
+                    'status' => $transaction->Response->Status, 
+                    'payment_type' => $autoPayment->payment_type,
+                    'transaction_fee' => $autoPayment->transaction_fee,
+                    'auto_payment_id' => $autoPayment->id
+                    //'Result' => $transaction->Response->Result,
+                    //'ErrorCode' => $transaction->Response->ErrorCode,
+                    //'Error' => $transaction->Response->Error,
+                    //'ResponseStatus' => $transaction->Response->Status
+                    //'Amount' => $transaction->Details->Amount,
+                ); 
+                $createTransaction=Transaction::create($transactionResult);
+            }
+        }
+        return "end";
     }
 }  

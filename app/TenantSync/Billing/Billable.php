@@ -177,8 +177,8 @@ trait Billable {
 		return config('usaEpay.pin');
 	}
 
-	public function addCustomer() {
-		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->addCustomer();
+	public function addCustomer($CustomerData) {
+		return (new UsaEpayGateway($this->owner->key, $this->owner->pin))->addCustomer($CustomerData);
 	}
 
 	public function findCustomer($customer) {

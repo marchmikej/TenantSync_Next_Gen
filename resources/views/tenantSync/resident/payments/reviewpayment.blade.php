@@ -29,6 +29,7 @@
 				<input type="hidden" name="account_number" value="{{$paymentDetails['account_number']}}">
 				<input type="hidden" name="routing_number" value="{{$paymentDetails['routing_number']}}">
 				<input type="hidden" name="bank_name" value="{{$paymentDetails['bank_name']}}">
+				<input type="hidden" name="AccountType" value="{{$paymentDetails['AccountType']}}">
 			@endif
 			<table class="table">
 				<tbody>
@@ -110,6 +111,10 @@
 						    <td>Bank Name</td>
 						    <td>{{$paymentDetails['bank_name']}}</td>
 					    </tr>
+					    <tr>
+						    <td>Account Type</td>
+						    <td>{{$paymentDetails['AccountType']}}</td>
+					    </tr>					    
 				    @endif
 				</tbody>
 			</table>
