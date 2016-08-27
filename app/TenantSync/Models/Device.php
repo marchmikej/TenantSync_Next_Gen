@@ -65,6 +65,10 @@ class Device extends Model {
 		return $this->hasMany('TenantSync\Models\UserProperty');	
 	}
 
+	public function autoPayments() {
+		return $this->hasMany('TenantSync\Models\AutoPayment');
+	}
+
 	public function maintenanceRequests()
 	{
 		return $this->hasMany('TenantSync\Models\MaintenanceRequest');
@@ -153,5 +157,10 @@ class Device extends Model {
         $this->save();
 
         return $this->alarm_id;
+	}
+
+	public function countResidents() 
+	{
+		return UserProperty::where('device_id', $this->id)->count();
 	}
 }

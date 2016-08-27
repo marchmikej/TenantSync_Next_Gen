@@ -29,9 +29,13 @@ public function __construct()
 		return view('TenantSync::resident.index');		
     }
 
-	public function displayResidents()
+	public function displayResidents($id)
     {
-        $devices = $this->user->devices;
+        if($id>0) {
+            $devices = Device::where('id',$id)->where('user_id',$this->user->id)->get();
+        } else {
+            $devices = $this->user->devices;
+        }
         //$resident =  $devices[0]->residents;
         //return $resident[0]->user;
     	// Base resident view

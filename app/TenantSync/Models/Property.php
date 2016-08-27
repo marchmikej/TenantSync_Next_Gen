@@ -166,4 +166,13 @@ class Property extends Model {
 		return $this->address . ', ' . $this->city . ' ' . $this->state;
 	}
 
+	public function getRentAmount()
+	{
+		return Device::where('property_id', $this->id)->sum('rent_amount');
+	}
+
+	public function deviceTotal()
+	{
+		return Device::where('property_id', $this->id)->count();
+	}
 }

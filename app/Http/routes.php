@@ -38,8 +38,8 @@ Route::get('resident/home', '\App\Http\Controllers\Resident\ResidentController@h
 Route::get('resident/transactions', '\App\Http\Controllers\Resident\TransactionController@home');
 Route::get('resident/deposits', '\App\Http\Controllers\Resident\DepositController@home');
 Route::get('resident/properties', '\App\Http\Controllers\Resident\PropertyController@home');
-Route::get('resident/devices', '\App\Http\Controllers\Resident\DeviceController@home');
-Route::get('resident/residents', '\App\Http\Controllers\Resident\ResidentController@displayResidents');
+Route::get('resident/devices/{id}', '\App\Http\Controllers\Resident\DeviceController@home');
+Route::get('resident/residents/{id}', '\App\Http\Controllers\Resident\ResidentController@displayResidents');
 Route::get('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createPropertyForm');
 Route::post('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createProperty');
 Route::get('resident/newunit', '\App\Http\Controllers\Resident\DeviceController@createDeviceForm');
@@ -51,10 +51,10 @@ Route::post('resident/newresident', '\App\Http\Controllers\Resident\ResidentCont
 //Single Payment routes
 Route::get('payment/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
 Route::get('payment/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\PaymentController@chooseAmount');
-Route::post('payment/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
-Route::post('payment/accountinfo', '\App\Http\Controllers\Resident\PaymentController@accountInfo');
-Route::post('payment/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@reviewPayment');
-Route::post('payment/submitpayment', '\App\Http\Controllers\Resident\PaymentController@submitPayment');
+Route::post('payment/choosepaymentamount/choosepaymentmethod', '\App\Http\Controllers\Resident\PaymentController@choosePaymentMethod');
+Route::post('payment/choosepaymentamount/accountinfo', '\App\Http\Controllers\Resident\PaymentController@accountInfo');
+Route::post('payment/choosepaymentamount/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@reviewPayment');
+Route::post('payment/choosepaymentamount/submitpayment', '\App\Http\Controllers\Resident\PaymentController@submitPayment');
 
 //Auto Payment routes
 Route::get('autopay/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
@@ -64,6 +64,7 @@ Route::post('autopay/choosepaymentamount/accountinfo', '\App\Http\Controllers\Re
 Route::post('autopay/choosepaymentamount/reviewpayment', '\App\Http\Controllers\Resident\PaymentController@autoPayReviewPayment');
 Route::post('autopay/choosepaymentamount/submitpayment', '\App\Http\Controllers\Resident\PaymentController@autoPaysubmitPayment');
 Route::get('autopay/viewautopayment', '\App\Http\Controllers\Resident\PaymentController@viewAutoPayments');
+Route::get('autopay/viewautopaymentlandlord', '\App\Http\Controllers\Resident\PaymentController@viewAutoPaymentsLandlord');
 
 Route::get('resident/test', '\App\Http\Controllers\Resident\PaymentController@test');
 

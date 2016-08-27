@@ -17,7 +17,7 @@
 	<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Units</span></a>
         <ul class="dropdown-menu">
-            <li><a href="/resident/devices">View Units</a></li>
+            <li><a href="/resident/devices/0">View Units</a></li>
             <li><a href="/resident/newunit">Add Unit</a></li>
         </ul>
     </li>
@@ -31,7 +31,7 @@
 	<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Residents</span></a>
         <ul class="dropdown-menu">
-            <li><a href="/resident/residents">View Residents</a></li>
+            <li><a href="/resident/residents/0">View Residents</a></li>
             <li><a href="/resident/newresident">Add Resident</a></li>
         </ul>
     </li>

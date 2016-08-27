@@ -15,6 +15,7 @@
 			    <tr>
 			      <th>Location</th>
 			      <th>Resident</th>
+			      <th>Email</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -22,6 +23,7 @@
 			  		@foreach ($device->residents as $resident)
     				<tr>
 				      <td>{{$device->address()}}</td>
+				      <td>{{$resident->user->last_name . ", " . $resident->user->first_name . " " . $resident->user->middle_initial}}<td>
 				      <td>{{$resident->user->email}}</td>
 			    	</tr>
 			    	@endforeach

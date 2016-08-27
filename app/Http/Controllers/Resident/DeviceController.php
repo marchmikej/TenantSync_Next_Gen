@@ -20,10 +20,14 @@ public function __construct()
         $this->middleware('auth');
     }
 
-	public function home()
+	public function home($id)
     {
-    	$manager = $this->user->manager;
-		return view('TenantSync::resident.device', compact('manager'));
+        if($id>0) {
+            $devices = Device::where('property_id',$id)->where('user_id',$this->user->id)->get();
+        } else {
+        	$devices = Device::where('user_id',$this->user->id)->get();
+        }
+		return view('TenantSync::resident.device', compact('devices'));
     }
 
     public function createDeviceForm() {
@@ -46,14 +50,13 @@ public function __construct()
             $this->input['user_id']=$this->user->manager();
         }
         $this->input['token'] = "123456";
-        $this->input['rent_amount'] = 0;
         $this->input['monthly_cost'] = 0;
         $this->input['late_fee'] = 0;
         $this->input['grace_period'] = 0;
         $this->input['vacant'] = 0;
         $this->input['alarm_id'] = 0;
         $payment = Device::create($this->input);
-        return DeviceController::home();
+        return DeviceController::createDeviceForm();
     }
 
 }  

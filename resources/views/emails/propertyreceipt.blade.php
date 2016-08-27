@@ -9,7 +9,7 @@
 	</style>
   </head>
   <body>
-    <h2>Payment Received</h2>
+    <h2>Payment Received Thank You!</h2>
 
     <div>
 		<table class="table">
@@ -27,7 +27,7 @@
 			  	@foreach ($transactions as $transaction)
 			  		<tr>
 			  			<td>{{$transaction->reference_number}}</td>
-			  			<td>{{$transaction->getUser()->id}}</td>
+			  			<td>{{$transaction->getUser()->last_name . ", " . $transaction->getUser()->first_name}}</td>
 			  			<td>{{$transaction->address()}}
 			  			<td>
 				  			@foreach ($transaction->getTypesArrary() as $key => $value)

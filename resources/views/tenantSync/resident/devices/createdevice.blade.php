@@ -16,7 +16,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-3">Unit Location</label>
 					<div class="col-sm-9">
-						<input class="form-control" type="text" name="location" placeholder="Address"/>
+						<input class="form-control" type="text" name="location" placeholder="Unit Name"/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -29,6 +29,12 @@
 							</select>
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">Rent Amount</label>
+					<div class="col-sm-9">
+						<input class="form-control" type="text" name="rent_amount" placeholder="Rent Amount"/>
+					</div>
+				</div>				
 				<button class="btn btn-primary col-sm-3 col-sm-offset-9">Submit</button>
 
 			</form>

@@ -26,11 +26,9 @@ public function __construct()
 
 	public function home()
     {
-    	$devices = $this->user->manager->devices()->toArray();
+    	$properties = Property::where('user_id',$this->user->id)->get();
 
-		$manager = $this->user->manager;
-
-		return view('TenantSync::resident/properties', compact('devices', 'manager'));	
+		return view('TenantSync::resident/properties', compact('properties'));	
     }
 
     public function createPropertyForm() {

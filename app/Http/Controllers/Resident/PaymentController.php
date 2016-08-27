@@ -183,7 +183,7 @@ public function __construct()
             'date' => Carbon::now()->toDateTimeString(), 
             'property_id' => $device->property_id,
             'payment_from_id' => $this->user->id,
-            'status' => "processing",
+            'status' => "Pending",
             'payment_from_source' => 0,   //If 0 it is from web if >0 then it is from that device
             'payment_type' => $this->input['payment_type'],
             'transaction_fee' => $transactionFee,
@@ -199,6 +199,14 @@ public function __construct()
             $payment->save();
 
             \DB::commit();
+
+            //Sending email to user for payment
+            $emailTransaction=array($payment);
+            $user=$payment->getUser();
+            Mail::send('emails.propertyreceipt', ['transactions' => $emailTransaction], function ($m) use ($user) {
+                $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+                $m->to($user->email)->subject('Payment Received');
+            });
         }
         else {
             \DB::rollback();
@@ -297,9 +305,10 @@ public function __construct()
             'schedule' => $this->input['Schedule'],
             'initial_date' => Carbon::createFromFormat('m/d/Y', $this->input['auto_date']),
             'num_payments' => $this->input['NumLeft'],
-            'amount' => $this->input['amount'],
+            'amount' => $amount,
             'transaction_fee' => $transactionFee,
             'payment_type' => $this->input['payment_type'],
+            'description' => $this->input['paymentFor'],
         ];  
 
         $newAutoPayment = AutoPayment::create($autoPayment);
@@ -310,33 +319,19 @@ public function __construct()
     }
 
     public function viewAutoPayments() {
-        $autoPayments = AutoPayment::where('user_id', $this->user->id)->get();
-
-        return view('TenantSync::resident/viewautopays', compact('autoPayments'));          
+        if(\Auth::user()->role ==  'landlord') {
+            $devices = Device::where('user_id',$this->user->id)->get();
+            return view('TenantSync::resident/viewautopayslandlord', compact('devices'));  
+        } else {
+            $autoPayments = AutoPayment::where('user_id', $this->user->id)->get();
+            return view('TenantSync::resident/viewautopays', compact('autoPayments'));    
+        }
     }
 
     public function test() {
 
         $user = $this->user;
-        //////////////////////
-        // Email to user    //
-        //////////////////////
-/*
-        $transactions = Transaction::where('payment_from_id', $this->user->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
 
-        //return view('emails/propertyreceipt', compact('transactions')); 
-
-        Mail::send('emails.propertyreceipt', ['transactions' => $transactions], function ($m) use ($user) {
-            $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
-
-            $m->to($user->email)->subject('Payment Received');
-        });
-  */      
-        //////////////////////
-        // End email to user//
-        //////////////////////
         
         /*
         $response = $device->findCustomer('6102639');
@@ -378,8 +373,9 @@ public function __construct()
             'Status' => $response->Status,
             'Result' => $response->Result); 
         */
+/*
         $autoPayment=AutoPayment::where('customer_number','6114387')->first();
-        return $autoPayment->user();
+
         $device=Device::find($autoPayment->device_id);
 
         $response = $device->getCustomerHistory($autoPayment->customer_number);
@@ -421,8 +417,16 @@ public function __construct()
                     //'Amount' => $transaction->Details->Amount,
                 ); 
                 $createTransaction=Transaction::create($transactionResult);
+                $emailTransaction=array($createTransaction);
+                $user=$autoPayment->user();
+                Mail::send('emails.propertyreceipt', ['transactions' => $emailTransaction], function ($m) use ($user) {
+                    $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+
+                    $m->to($user->email)->subject('Payment Received');
+                });
             }
         }
         return "end";
+        */
     }
 }  

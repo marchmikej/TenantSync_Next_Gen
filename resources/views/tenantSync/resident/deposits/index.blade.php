@@ -21,6 +21,7 @@
 			      <th>Type</th>
 			      <th>Status</th>
 			      <th>Reference Number</th>
+			      <th>Auto Payment</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -35,6 +36,11 @@
 				      <td>{{$transaction->payment_type}}</td>
 				      <td>{{$transaction->status}}</td>
 				      <td>{{$transaction->reference_number}}</td>
+				      @if ($transaction->auto_payment_id>0) 
+				      	<td>Yes</td>
+				      @else
+					    <td>No</td>
+				      @endif
 			    	</tr>
 			    	@endforeach
 				@endforeach
