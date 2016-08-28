@@ -319,8 +319,8 @@ public function __construct()
     }
 
     public function viewAutoPayments() {
-        if(\Auth::user()->role ==  'landlord') {
-            $devices = Device::where('user_id',$this->user->id)->get();
+        if($this->user->company_id > 0) {
+            $devices = $this->user->companyDevices();
             return view('TenantSync::resident/viewautopayslandlord', compact('devices'));  
         } else {
             $autoPayments = AutoPayment::where('user_id', $this->user->id)->get();
@@ -331,7 +331,7 @@ public function __construct()
     public function test() {
 
         $user = $this->user;
-
+        return view('TenantSync::resident/rentroll/readin', compact('autoPayments'));   
         
         /*
         $response = $device->findCustomer('6102639');

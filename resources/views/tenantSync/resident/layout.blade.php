@@ -53,6 +53,7 @@
 
 			    	@if(Auth::user()->role ==  'landlord')
 			    	<li><a href="/{{Auth::user()->role}}/managers">Managers</a></li>
+			    	<li><a href="/upload/home">Update Rent Roll</a></li>
 			    	@endif
 
 				    <li role="separator" class="divider"></li>

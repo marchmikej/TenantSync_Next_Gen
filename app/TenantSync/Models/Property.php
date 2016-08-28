@@ -35,7 +35,8 @@ class Property extends Model {
 		'insurance', 
 		'down_payment', 
 		'mortgage_rate', 
-		'mortgage_term'
+		'mortgage_term',
+		'company_id'
 	];
 
 
@@ -174,5 +175,10 @@ class Property extends Model {
 	public function deviceTotal()
 	{
 		return Device::where('property_id', $this->id)->count();
+	}
+
+	public function getCompany()
+	{
+		return Company::find($this->company_id);
 	}
 }

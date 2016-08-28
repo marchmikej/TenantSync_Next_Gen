@@ -29,18 +29,7 @@ public function __construct(TransactionMutator $transactionMutator)
 
 	public function home()
     {
-        if(\Auth::user()->role ==  'landlord') {
-            $transactions = Transaction::where('user_id', $this->user->id)
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } else if(\Auth::user()->role ==  'manager') {
-            $manager=Manager::where('user_id',$this->user->id)->first();
-            $transactions = Transaction::where('user_id', $manager->landlord_id)
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } else {
-            $transactions = array();
-        }
-		return view('TenantSync::resident.transactions.index', compact('transactions'));	
+        $devices = $this->user->companyDevices();
+		return view('TenantSync::resident.transactions.index', compact('devices'));	
     }
 }  

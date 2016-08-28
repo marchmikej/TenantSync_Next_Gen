@@ -37,7 +37,8 @@ class Device extends Model {
 		'balance_due',
 		'monthly_cost', 
 		'contact_name', 
-		'contact_phone'
+		'contact_phone',
+		'resident_name'
 	];
 
 	/**
@@ -162,5 +163,9 @@ class Device extends Model {
 	public function countResidents() 
 	{
 		return UserProperty::where('device_id', $this->id)->count();
+	}
+
+	public function getCompany() {
+		return Property::find($this->property_id)->company_id;
 	}
 }

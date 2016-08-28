@@ -32,9 +32,15 @@ public function __construct()
 	public function displayResidents($id)
     {
         if($id>0) {
-            $devices = Device::where('id',$id)->where('user_id',$this->user->id)->get();
+            $device = Device::find($id);
+            if($device->getCompany() != $this->user->company_id) {
+                echo $device->getCompany();
+                $devices = array();
+            } else {
+                $devices=array($device);
+            }
         } else {
-            $devices = $this->user->devices;
+            $devices = $this->user->companyDevices();
         }
         //$resident =  $devices[0]->residents;
         //return $resident[0]->user;
@@ -43,15 +49,8 @@ public function __construct()
     }
 
     public function createResidentForm() {
-        if(\Auth::user()->role ==  'landlord') {
-            $devices=Device::where('user_id',$this->user->id)->get();
-        }
-        else if(\Auth::user()->role ==  'manager') {
-            $devices=Device::where('id',$this->user->manager());
-        } else {
-            $devices="";
-        }
-        return view('TenantSync::resident/createresident', compact('devices'));
+        $properties=Property::where('company_id',$this->user->company_id)->get();
+        return view('TenantSync::resident/createresident', compact('properties'));
     }
 
     public function createResident() {

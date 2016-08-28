@@ -26,7 +26,7 @@ public function __construct()
 
 	public function home()
     {
-    	$properties = Property::where('user_id',$this->user->id)->get();
+    	$properties = Property::where('company_id',$this->user->company_id)->get();
 
 		return view('TenantSync::resident/properties', compact('properties'));	
     }
@@ -36,12 +36,8 @@ public function __construct()
     }
 
     public function createProperty() {
-        if(\Auth::user()->role ==  'landlord') {
-            $this->input['user_id']=$this->user->id;
-        }
-        else if(\Auth::user()->role ==  'manager') {
-            $this->input['user_id']=$this->user->manager();
-        }
+        $this->input['user_id']=0;
+        $this->input['company_id']=$this->user->company_id;
         $payment = Property::create($this->input);
         return PropertyController::home();
     }

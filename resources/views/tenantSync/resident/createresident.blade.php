@@ -23,8 +23,10 @@
 					<label class="control-label col-sm-3">Unit</label>
 					<div class="col-sm-9">
 							<select class="form-control" name="device_id">
-								@foreach($devices as $device)
-									<option value="{{$device->id}}">{{$device->address()}}</option>
+							  	@foreach ($properties as $property)
+								  	@foreach ($property->devices as $device)
+										<option value="{{$device->id}}">{{$device->address()}}</option>
+									@endforeach
 								@endforeach
 							</select>
 					</div>

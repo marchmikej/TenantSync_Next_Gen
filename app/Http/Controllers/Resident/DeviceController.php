@@ -23,32 +23,22 @@ public function __construct()
 	public function home($id)
     {
         if($id>0) {
-            $devices = Device::where('property_id',$id)->where('user_id',$this->user->id)->get();
+            $properties=Property::where('id',$id)->where('company_id',$this->user->company_id)->get();
+            //$devices = Device::where('property_id',$id)->where('user_id',$this->user->id)->get();
         } else {
-        	$devices = Device::where('user_id',$this->user->id)->get();
+            $properties=Property::where('company_id',$this->user->company_id)->get();
+        	//$devices = Device::where('user_id',$this->user->id)->get();
         }
-		return view('TenantSync::resident.device', compact('devices'));
+		return view('TenantSync::resident.device', compact('properties'));
     }
 
     public function createDeviceForm() {
-    	if(\Auth::user()->role ==  'landlord') {
-        	$properties=Property::where('user_id',$this->user->id)->get();
-        }
-        else if(\Auth::user()->role ==  'manager') {
-        	$properties=Property::where('id',$this->user->manager());
-        } else {
-        	$properties="";
-        }
+    	$properties=Property::where('company_id',$this->user->company_id)->get();
         return view('TenantSync::resident/devices/createdevice', compact('properties'));
     }
 
     public function createDevice() {
-        if(\Auth::user()->role ==  'landlord') {
-            $this->input['user_id']=$this->user->id;
-        }
-        else if(\Auth::user()->role ==  'manager') {
-            $this->input['user_id']=$this->user->manager();
-        }
+        $this->input['user_id'] = 0;
         $this->input['token'] = "123456";
         $this->input['monthly_cost'] = 0;
         $this->input['late_fee'] = 0;

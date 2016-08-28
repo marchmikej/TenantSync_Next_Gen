@@ -47,7 +47,6 @@ Route::post('resident/newunit', '\App\Http\Controllers\Resident\DeviceController
 Route::get('resident/newresident', '\App\Http\Controllers\Resident\ResidentController@createResidentForm');
 Route::post('resident/newresident', '\App\Http\Controllers\Resident\ResidentController@createResident');
 
-
 //Single Payment routes
 Route::get('payment/choosepaymentlocation', '\App\Http\Controllers\Resident\PaymentController@chooseLocation');
 Route::get('payment/choosepaymentamount/{id}', '\App\Http\Controllers\Resident\PaymentController@chooseAmount');
@@ -66,7 +65,15 @@ Route::post('autopay/choosepaymentamount/submitpayment', '\App\Http\Controllers\
 Route::get('autopay/viewautopayment', '\App\Http\Controllers\Resident\PaymentController@viewAutoPayments');
 Route::get('autopay/viewautopaymentlandlord', '\App\Http\Controllers\Resident\PaymentController@viewAutoPaymentsLandlord');
 
+
+//Upload file links
+Route::get('upload/home', '\App\Http\Controllers\Resident\UploadController@home');
+Route::post('upload/changerentroll', '\App\Http\Controllers\Resident\UploadController@makeRentRollChanges');
+Route::post('upload/rentroll', '\App\Http\Controllers\Resident\UploadController@rentRollSubmit');
+
+//Test stuff
 Route::get('resident/test', '\App\Http\Controllers\Resident\PaymentController@test');
+
 
 //Profile Routes
 Route::get('profile', '\App\Http\Controllers\Resident\ProfileController@index');
