@@ -9,7 +9,15 @@
 			<div class="card-header">
 				<h4>Review Rent Roll Changes</h4>
 			</div>
-
+			@if($updateDetails['property']!= NULL)
+				<h5>
+					Update for Property: {{$updateDetails['property']->address}}
+				</h5>
+			@else
+				<h5>
+					Creating Property: {{$updateDetails['address']}}
+				</h5>			
+			@endif
 			<form class="form form-horizontal" action="/upload/changerentroll" method="POST">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			
@@ -19,6 +27,8 @@
 				      <th>Perform</th>
 				      <th>Unit</th>
 				      <th>Action</th>
+				      <th>Tenant</th>
+				      <th>Rent</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -27,6 +37,8 @@
 					      <td><input checked type="checkbox" name="{{$key}}" value="PERFORM"</td>
 					      <td>{{$value['Unit']}}</td>
 					      <td>{{$value['Action']}}</td>
+					      <td>{{$value['Tenant']}}</td>
+					      <td>{{$value['Rent']}}</td>
 				    	</tr>
 					@endforeach
 				  </tbody>

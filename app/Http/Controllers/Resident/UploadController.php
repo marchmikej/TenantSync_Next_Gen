@@ -30,19 +30,11 @@ public function __construct()
     {
         
         // VALIDATION RULES
-        /*
-        $rules = array(
-            'file' => 'image|max:3000',
-        );
-    
-       // PASS THE INPUT AND RULES INTO THE VALIDATOR
-        $validation = Validator::make($input, $rules);
- 
-        // CHECK GIVEN DATA IS VALID OR NOT
-        if ($validation->fails()) {
-            return Redirect::to('/')->with('message', $validation->errors->first());
-        }
-        */
+        $this->validate($this->request, [
+            'file' => 'required|mimes:csv,txt',
+            'csvtype' => 'required',
+        ]);
+        
         $file = $this->input['file'];
         // SET UPLOAD PATH
         $destinationPath = 'uploads';
@@ -68,20 +60,47 @@ public function __construct()
 	        */
 		$handle = fopen('uploads/' . $fileName, "r");
 		$startParse = false;
-		$property=49;
-		$changes=array();
+		$changes=array();  //This is array passed for review
+		$periodDate = "";  //This should populate as date report was run
+		$propertyName = "";  //This is the name off of the CSV file
+		$propertyAddress = "";  //This is the address off of the CSV file
+		$property = array();
+		$count = 0; //Line of csv
 
 		while ($csvLine = fgetcsv($handle, 1000, ",")) {
+			$count++;
 			if($csvLine[0]=="Building Totals") {
+				//Building Totals shows that units are done
 				$startParse = false;
 			}
+			if($count==2) {
+				$periodDate = $csvLine[3];			
+			}			
+			if($count==3) {
+				$propertyName = $csvLine[0];  //This is the name off of the CSV file
+				$propertyAddress = $csvLine[1];  //This is the address off of the CSV file		
+				$property = Property::where('address',$csvLine[1])->where('company_id',$this->user->company_id)->first();
+			}
 			if($startParse) {
-			    $device = Device::where('property_id',$property)->where('location',$csvLine[0])->first();
+				///////////////////////////////
+				// When $startParse=true     //
+				// $csvLine[0] = UNIT        //
+				// $csvLine[2] = Tenant      //
+				// $csvLine[3] = Rent        //
+				///////////////////////////////
+				// Do not check device if creating a new property
+				if(count($property)>0) {
+				    $device = Device::where('property_id',$property->id)->where('location',$csvLine[0])->first();
+				} else {
+					$device=array();
+				}
 			    if(count($device)>0) {
 			    	if($device->resident_name!=$csvLine[2]) {
 			    		$changes[$csvLine[0]."TENANT"] = array(
 				            'Unit' => $csvLine[0], 
             				'Action' => "Update tenant from " . $device->resident_name . " to " . $csvLine[2], 
+            				'Tenant' => $csvLine[2],
+            				'Rent' => $csvLine[3],
             				);
 			    		//"Unit: " . $csvLine[0] . " Will update tenant from " . $device->resident_name . " to " . $csvLine[2];
 			    	}
@@ -89,13 +108,17 @@ public function __construct()
 			    		$changes[$csvLine[0]."RENT"] = array(
 				            'Unit' => $csvLine[0], 
             				'Action' => "Update rent from " . $device->rent_amount . " to " . $csvLine[3], 
+            				'Tenant' => $csvLine[2],
+            				'Rent' => $csvLine[3],
             				);
             				// "Unit: " . $csvLine[0] . " Will update rent from " . $device->rent_amount . " to " . $csvLine[3];
 			    	}
 			    } else {
 			    	$changes[$csvLine[0]."NEWUNIT"] = array(
 				            'Unit' => $csvLine[0], 
-            				'Action' => "Create new unit. Tenant: " . $csvLine[2] . " Rent: " . $csvLine[3], 
+            				'Action' => "Create new unit", 
+            				'Tenant' => $csvLine[2],
+            				'Rent' => $csvLine[3],
             				);
 			    	//"New Unit: " . $csvLine[0] . " Tenant: " . $csvLine[2] . " Rent: " . $csvLine[3];
 			    }
@@ -104,24 +127,49 @@ public function __construct()
 				$startParse = true;
 			}
 		}
-        return view('TenantSync::resident/rentroll/reviewrentrollchanges', compact('changes')); 
+		$updateDetails = array(
+			'date' => $periodDate,
+			'property_name' => $propertyName,
+			'address' => $propertyAddress,
+			'property' => $property,
+		);
+        return view('TenantSync::resident/rentroll/reviewrentrollchanges', compact('changes','updateDetails')); 
     }
 
     public function makeRentRollChanges() {
     	$fileName='rentroll.csv';
 		$handle = fopen('uploads/' . $fileName, "r");
 		$startParse = false;
-		$property=49;
-		$changes="";
-		$count=0;
+		$periodDate = "";  //This should populate as date report was run
+		$propertyName = "";  //This is the name off of the CSV file
+		$propertyAddress = "";  //This is the address off of the CSV file
+		$property = array();
+		$count = 0; //Line of csv
 
 		while ($csvLine = fgetcsv($handle, 1000, ",")) {
 			$count++;
 			if($csvLine[0]=="Building Totals") {
 				$startParse = false;
 			}
+			if($count==2) {
+				$periodDate = $csvLine[3];			
+			}			
+			if($count==3) {
+				$propertyName = $csvLine[0];  //This is the name off of the CSV file
+				$propertyAddress = $csvLine[1];  //This is the address off of the CSV file		
+				$property = Property::where('address',$csvLine[1])->where('company_id',$this->user->company_id)->first();
+				if(count($property)==0) {
+			    	$newProperty = array(
+				    		'user_id' => 0, 
+            				'company_id' => $this->user->company_id, 
+            				'address' => $csvLine[1],
+			    		);
+			    	$property = Property::create($newProperty);
+			        $property->save();
+				}
+			}
 			if($startParse) {
-			    $device = Device::where('property_id',$property)->where('location',$csvLine[0])->first();
+			    $device = Device::where('property_id',$property->id)->where('location',$csvLine[0])->first();
 			    if(count($device)>0) {
 			    	if($device->resident_name!=$csvLine[2] && \Input::has($csvLine[0]."TENANT")) {
 			    		$device->resident_name = $csvLine[2];
@@ -132,12 +180,12 @@ public function __construct()
 			    		$device->save();
 			    	}
 			    } else if(\Input::has($csvLine[0]."NEWUNIT")) {
-			    	$changes = $changes . "New Unit: " . $csvLine[0] . " Tenant: " . $csvLine[2] . " Rent: " . $csvLine[3] . "<br>";
+
 			    	$newDevice = array(
 				    		'location' => $csvLine[0], 
             				'rent_amount' => $csvLine[3], 
             				'resident_name' => $csvLine[2],
-            				'property_id' => $property,
+            				'property_id' => $property->id,
             				'user_id' => 0,
 					        'token' => "123456",
 					        'monthly_cost' => 0,

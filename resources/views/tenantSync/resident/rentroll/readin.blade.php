@@ -12,9 +12,15 @@
 		<form class="form form-horizontal" action="/upload/rentroll" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="form-group">
-				<label class="control-label col-sm-3">Upload File</label>
+				<label class="control-label col-sm-3">Upload CSV File</label>
 				<div class="col-sm-4">
 					<input class="form-control" type="file" name="file"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-3">Multi Data Services (MDS)</label>
+				<div class="col-sm-4">
+					<input class="form-control" type="radio" name="csvtype" value="mds"/>
 				</div>
 			</div>
 			<button class="btn btn-primary col-sm-3 col-sm-offset-9">Submit</button>

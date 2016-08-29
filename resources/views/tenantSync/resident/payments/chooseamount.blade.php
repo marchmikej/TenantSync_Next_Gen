@@ -9,10 +9,10 @@
 			<div class="card-header">
 				<h4>Payment Amount</h4>
 			</div>
-
+			<h3>Monthly Rent: {{money_format("$%i",$device->rent_amount)}}</h3>
 			<form class="form form-horizontal" action="choosepaymentmethod" method="POST">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
-				<input type="hidden" name="property" value="{{$paymentDetails['property']}}">
+				<input type="hidden" name="property" value="{{$device->id}}">
 				@foreach ($paymentTypes as $paymentType)				
 					<div class="form-group">
 						<label class="control-label col-sm-3">{{$paymentType->payment_type}}</label>

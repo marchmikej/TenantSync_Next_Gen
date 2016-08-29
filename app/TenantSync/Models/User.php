@@ -209,4 +209,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
         return $devices;
     }
+
+    public function companyProperties() {
+        return Property::where('company_id',$this->company_id)->get();
+    }
 }

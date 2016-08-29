@@ -7,14 +7,14 @@
 	<div class="col-sm-12">
 		<div>
 			<div class="card-header">
-				<h4>Residents</h4>
+				<h4>Resident Emails</h4>
 			</div>
 
 			<table class="table">
 			  <thead class="thead-default">
 			    <tr>
 			      <th>Location</th>
-			      <th>Resident</th>
+			      <th>Name</th>
 			      <th>Email</th>
 			    </tr>
 			  </thead>

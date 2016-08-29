@@ -44,8 +44,9 @@ public function __construct()
         $paymentDetails = array(
             "property" => $id,
         );
+        $device=Device::find($id)->first();
 
-        return view('TenantSync::resident/payments/chooseamount', compact('paymentTypes', 'paymentDetails'));    
+        return view('TenantSync::resident/payments/chooseamount', compact('paymentTypes', 'device'));    
     }
 
     public function choosePaymentMethod()
@@ -233,7 +234,6 @@ public function __construct()
         $autoMonth = substr($this->input['auto_date'],3,2);
         $autoYear = substr($this->input['auto_date'],6,4);
         $autoSend = $autoYear . "-" . $autoMonth . "-" . $autoDay;
-
         // $payment array will hold payment information.  
 
         if($this->input['payment_type']=='credit') {
@@ -331,10 +331,10 @@ public function __construct()
     public function test() {
 
         $user = $this->user;
-        return view('TenantSync::resident/rentroll/readin', compact('autoPayments'));   
+        //return view('TenantSync::resident/rentroll/readin', compact('autoPayments'));   
         
-        /*
-        $response = $device->findCustomer('6102639');
+        $device=Device::find(99);
+        $response = $device->findCustomer('6130704');
 
         $customerResponse = array(
             'CustNum' => $response->CustNum, 
@@ -346,7 +346,7 @@ public function __construct()
             'OrderID' => $response->OrderID,
             'SendReceipt' => $response->SendReceipt,
             'Amount' => $response->Amount); 
-*/        
+       return $customerResponse;
         //6102639 customer num
         /*
         $paymentResponse = array(

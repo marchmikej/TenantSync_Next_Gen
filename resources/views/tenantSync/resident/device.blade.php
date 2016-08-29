@@ -16,7 +16,8 @@
 			      <th>Address</th>
 			      <th>Location</th>
 			      <th>Rent</th>
-			      <th>Residents</th>
+			      <th>Resident</th>
+			      <th>Resident Emails</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -26,6 +27,7 @@
 					      <td><a href="/resident/residents/{{$device->id}}">{{$device->address()}}</a></td>
 					      <td>{{$device->location}}</td>
 					      <td>{{money_format("$%i",$device->rent_amount)}}</td>
+					      <td>{{$device->resident_name}}</td>
 					      <td>{{$device->countResidents()}}</td>
 				    	</tr>
 					@endforeach
