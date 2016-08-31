@@ -8,6 +8,7 @@ class Gateway extends Model {
 		'user_id',
 		'pin',
 		'key',
+		'customer_id'
 	];
 
 	public function user()

@@ -63,7 +63,8 @@ class Device extends Model {
 	}
 
 	public function residents() {
-		return $this->hasMany('TenantSync\Models\UserProperty');	
+		//return $this->hasMany('TenantSync\Models\UserProperty');	
+		return UserProperty::where('device_id', $this->id)->where('status','active')->get();
 	}
 
 	public function autoPayments() {
@@ -162,10 +163,22 @@ class Device extends Model {
 
 	public function countResidents() 
 	{
-		return UserProperty::where('device_id', $this->id)->count();
+		return UserProperty::where('device_id', $this->id)->where('status','active')->count();
 	}
 
 	public function getCompany() {
 		return Property::find($this->property_id)->company_id;
+	}
+
+	public function getKey() {
+		$company_id = Property::find($this->property_id)->company_id;
+		$gateway = Gateway::where('company_id',$company_id)->first();
+		return $gateway->key;
+	}
+
+	public function getPin() {
+		$company_id = Property::find($this->property_id)->company_id;
+		$gateway = Gateway::where('company_id',$company_id)->first();
+		return $gateway->pin;
 	}
 }

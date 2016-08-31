@@ -13,7 +13,7 @@
         <li><a href="/autopay/viewautopayment">View Auto Payments</a></li>
     </ul>
 </li>
-@if(Auth::user()->role ==  'landlord' || Auth::user()->role ==  'manager')
+@if(Auth::user()->company_id > 0)
 	<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Properties</span></a>
         <ul class="dropdown-menu">
@@ -53,6 +53,8 @@
 
 			    	@if(Auth::user()->role ==  'landlord')
 			    	<li><a href="/{{Auth::user()->role}}/managers">Managers</a></li>
+			    	@endif
+			    	@if(Auth::user()->company_id > 0)
 			    	<li><a href="/upload/home">Update Rent Roll</a></li>
 			    	@endif
 

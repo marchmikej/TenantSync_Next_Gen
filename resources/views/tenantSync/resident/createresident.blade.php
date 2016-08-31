@@ -7,7 +7,7 @@
 		<div class="col-sm-12">
 		<div>
 			<div class="card-header">
-				<h4>Add Resident</h4>
+				<h4>Add Resident Email</h4>
 			</div>
 
 			<form class="form form-horizontal" action="/resident/newresident" method="POST">

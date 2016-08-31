@@ -133,7 +133,7 @@ public function __construct()
     public function autoPayReviewPayment()
     {
         if(!empty($this->input['indefinite'])) {
-            $this->input['NumLeft'] = 0;
+            $this->input['NumLeft'] = -1;
         }        
 
         $paymentDetails=$this->input;
@@ -230,10 +230,11 @@ public function __construct()
         $transactionFee = 0;
 
         //date format dd/mm/yyyy to yyyy-mm-dd
-        $autoDay = substr($this->input['auto_date'],0,2);
-        $autoMonth = substr($this->input['auto_date'],3,2);
+        $autoMonth = substr($this->input['auto_date'],0,2);
+        $autoDay = substr($this->input['auto_date'],3,2);
         $autoYear = substr($this->input['auto_date'],6,4);
         $autoSend = $autoYear . "-" . $autoMonth . "-" . $autoDay;
+
         // $payment array will hold payment information.  
 
         if($this->input['payment_type']=='credit') {
@@ -315,7 +316,10 @@ public function __construct()
 
         $newAutoPayment->save();
 
-        return $newAutoPayment;
+        $message = array(
+            'message' => 'Auto Payemnt Scheduled.  Thank you!',
+        );
+        return view('TenantSync::resident/verify/message', compact('message')); 
     }
 
     public function viewAutoPayments() {
@@ -334,7 +338,7 @@ public function __construct()
         //return view('TenantSync::resident/rentroll/readin', compact('autoPayments'));   
         
         $device=Device::find(99);
-        $response = $device->findCustomer('6130704');
+        $response = $device->findCustomer('6137892');
 
         $customerResponse = array(
             'CustNum' => $response->CustNum, 

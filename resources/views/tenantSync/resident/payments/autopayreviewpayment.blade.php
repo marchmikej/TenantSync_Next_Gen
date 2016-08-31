@@ -78,7 +78,11 @@
 				   	</tr>
 				   	<tr>
 					    <td>Number of payments to process</td>
-					    <td>{{$paymentDetails['NumLeft']}}</td>
+					    @if($paymentDetails['NumLeft']==-1) 
+					    	<td>Indefinite</td>
+					    @else
+						    <td>{{$paymentDetails['NumLeft']}}</td>
+						@endif
 				   	</tr>					   	
 					<tr>
 					    <td>Payment Type</td>

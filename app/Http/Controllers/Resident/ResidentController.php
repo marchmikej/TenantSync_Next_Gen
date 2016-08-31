@@ -13,7 +13,7 @@ use App\Http\Controllers\Auth;
 use TenantSync\Mutators\PropertyMutator;use Response;
 
 use DB;
-
+use Mail;
 
 class ResidentController extends Controller {
     
@@ -54,23 +54,111 @@ public function __construct()
     }
 
     public function createResident() {
-        $user = User::where('email',$this->input['email'])->get();
-        if(count($user)>1) {
-            // More than 1 user this is an issue
-            $returnMessage="This email has multiple users please contact suppport";
-        } else if(count($user)==1) {
-            $userProperty=UserProperty::where('user_id',$user[0]->id)->where('device_id',$this->input['device_id'])->get();
-            if(count($userProperty)>0) {
-                // This user is already connected to this device
-                $returnMessage="This user is already a resident of this unit.";
+            $this->validate($this->request, [
+                'email' => 'required|email',
+            ]);
+        //Check if request is already pending
+        $userProperty = UserProperty::
+            where('device_id',$this->input['device_id'])
+            ->where('status',$this->input['email'])
+            ->first();
+        $device=Device::where('id',$this->input['device_id'])->first();
+        if(count($userProperty)>0) {
+            // Request is already pending.  Get device information and resend email.
+            $emailInfo = array(
+                'email' => $this->input['email'],
+                'address' => $device->address(),
+                'user_property_id' => $userProperty->id,
+                'device_id' => $this->input['device_id'],
+                );
+            if($device->getCompany() == $this->user->company_id) {
+                Mail::send('emails.residentconfirm', ['emailInfo' => $emailInfo], function ($m) use ($emailInfo) {
+                    $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+                    $m->to($emailInfo['email'])->subject('Please Confirm Email');
+                }); 
             } else {
-                $this->input['user_id'] = $user[0]->id;
-                UserProperty::create($this->input);
-                $returnMessage="User added to unit.";
+                return "Error you do not own this unit";
+            }
+
+            $returnMessage="This request is already pending.  Email resent";
+        } else {
+            $user = User::where('email',$this->input['email'])->first();
+            //if count user==0 then we must create a new user_property and send request mail
+            if(count($user)==0) {
+                $returnMessage="This request was created and email sent";
+            } else {
+                $userProperty = UserProperty::
+                    where('device_id',$this->input['device_id'])
+                    ->where('user_id',$user->id)
+                    ->where('status','active')
+                    ->first();
+                if(count($userProperty)>0) {
+                    return "This resident is already assigned to this property";
+                } else {
+                    $returnMessage="This request was created and email sent";
+                }
+            }
+            if($device->getCompany() == $this->user->company_id) {
+                $newUserProperty = array(
+                    'user_id' => 0,
+                    'device_id' => $this->input['device_id'],
+                    'status' => $this->input['email'],
+                );
+                $userProperty = UserProperty::create($newUserProperty);
+                $userProperty->save();
+                $emailInfo = array(
+                    'email' => $this->input['email'],
+                    'address' => $device->address(),
+                    'device_id' => $this->input['device_id'],
+                );
+                Mail::send('emails.residentconfirm', ['emailInfo' => $emailInfo], function ($m) use ($emailInfo) {
+                    $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+                    $m->to($emailInfo['email'])->subject('Please Confirm Email');
+                }); 
+            } else {
+                $returnMessage =  "You do not own this unit";
+            }
+        }
+        $message = array(
+            'message' => $returnMessage,
+        );
+        return view('TenantSync::resident/verify/messagelandlord', compact('message')); 
+/*
+        $user = User::where('email',$this->input['email'])->get();
+
+        if(count($user)>0) {
+            // User already exists
+            $userProperty = UserProperty::where('user_id',$user[0]->id)
+                ->where('device_id',$this->input['device_id'])
+                ->where('status','active')
+                ->get();
+            if(count($userProperty)>0) {
+                $returnMessage="1This user is already a resident of this unit.";
+            } else {
+
+            }
+        } else if(count($user)==1) {
+            if(count($userProperty)>0 && $userProperty->status == 'active') {
+                // This user is already connected to this device
+                $returnMessage="2This user is already a resident of this unit.";
+            } else if(count($userProperty)>0 && $userProperty->status == $this->input['email']) {
+              Mail::send('emails.propertyreceipt', ['transactions' => $emailTransaction], function ($m) use ($user) {
+                    $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+                    $m->to($user->email)->subject('Payment Received');
+                }); 
+                $returnMessage="3User still pending.  Email resent";
+            } else {
+                $returnMessage="4Email sent to resident for confirmation";
             }
         } else {
-            $returnMessage="There was an error in processing.";
-        }
-        return $returnMessage;
+            /*
+            $this->input['user_id'] = $user[0]->id;
+            $userProperty=UserProperty::create($this->input);
+            return $userProperty; 
+            Mail::send('emails.propertyreceipt', ['transactions' => $emailTransaction], function ($m) use ($user) {
+                $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
+                $m->to($user->email)->subject('Payment Received'); 
+            $returnMessage="5Email sent to resident for confirmation";
+        } */
     }
 }  

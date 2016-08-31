@@ -66,6 +66,10 @@ Route::get('autopay/viewautopayment', '\App\Http\Controllers\Resident\PaymentCon
 Route::get('autopay/viewautopaymentlandlord', '\App\Http\Controllers\Resident\PaymentController@viewAutoPaymentsLandlord');
 
 
+//Verify links
+Route::get('verify/resident/{id}/{email}', '\App\Http\Controllers\Resident\VerifyController@resident');
+Route::post('verify/resident/{id}/{email}', '\App\Http\Controllers\Resident\VerifyController@residentVerify');
+
 //Upload file links
 Route::get('upload/home', '\App\Http\Controllers\Resident\UploadController@home');
 Route::post('upload/changerentroll', '\App\Http\Controllers\Resident\UploadController@makeRentRollChanges');

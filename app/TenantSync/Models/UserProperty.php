@@ -21,6 +21,7 @@ class UserProperty extends Model {
 	protected $fillable = [
 		'user_id', 
 		'device_id',
+		'status',
 	];
 
 	/**

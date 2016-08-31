@@ -29,7 +29,11 @@
     				<tr>
 				      <td>Still Working On</td>
 				      <td>{{$autoPayment->initial_date}}</td>
-				      <td>{{$autoPayment->num_payments}}</td>
+				      @if($autoPayment->num_payments==-1)
+					  	<td>Indefinite</td>
+				      @else
+					    <td>{{$autoPayment->num_payments}}</td>
+					  @endif
 				      <td>{{$autoPayment->customer_number}}</td>
 				      <td>{{$autoPayment->device()->address()}}</td>
 				      <td>{{$autoPayment->schedule}}</td>
