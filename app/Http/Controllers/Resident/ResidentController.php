@@ -82,6 +82,7 @@ public function __construct()
 
             $returnMessage="This request is already pending.  Email resent";
         } else {
+            //Request has not yet been created
             $user = User::where('email',$this->input['email'])->first();
             //if count user==0 then we must create a new user_property and send request mail
             if(count($user)==0) {
@@ -93,7 +94,10 @@ public function __construct()
                     ->where('status','active')
                     ->first();
                 if(count($userProperty)>0) {
-                    return "This resident is already assigned to this property";
+                    $message = array(
+                        'message' => "This resident is already assigned to this property",
+                    );
+                    return view('TenantSync::resident/verify/messagelandlord', compact('message')); 
                 } else {
                     $returnMessage="This request was created and email sent";
                 }

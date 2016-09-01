@@ -213,4 +213,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function companyProperties() {
         return Property::where('company_id',$this->company_id)->get();
     }
+
+    public function company() {
+    	//return $this->hasOne('TenantSync\Models\Company');
+    	return Company::where('id',$this->company_id)->first();
+    }
 }
