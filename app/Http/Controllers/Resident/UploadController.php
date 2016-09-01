@@ -42,7 +42,7 @@ public function __construct()
         $extension = $file->getClientOriginalExtension();
         //$extension="csv";
         // RENAME THE UPLOAD WITH RANDOM NUMBER
-        $fileName = "rentroll" . '.' . $extension;
+        $fileName = $this->user->id . '.csv';
         // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
         $upload_success = $file->move($destinationPath, $fileName);
         
@@ -137,7 +137,7 @@ public function __construct()
     }
 
     public function makeRentRollChanges() {
-    	$fileName='rentroll.csv';
+    	$fileName=$this->user->id . '.csv';
 		$handle = fopen('uploads/' . $fileName, "r");
 		$startParse = false;
 		$periodDate = "";  //This should populate as date report was run
