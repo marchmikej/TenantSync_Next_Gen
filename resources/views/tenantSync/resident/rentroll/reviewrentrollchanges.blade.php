@@ -34,7 +34,11 @@
 				  <tbody>
 				  	@foreach ($changes as $key => $value)
 		    			<tr>
-					      <td><input checked type="checkbox" name="{{$key}}" value="PERFORM"</td>
+		    			  <td>
+		    			  @if($value['read']==true)
+						      <input checked type="checkbox" name="{{$key}}" value="PERFORM">
+						  @endif
+						  </td>
 					      <td>{{$value['Unit']}}</td>
 					      <td>{{$value['Action']}}</td>
 					      <td>{{$value['Tenant']}}</td>

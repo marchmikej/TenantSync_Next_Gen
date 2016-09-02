@@ -69,11 +69,12 @@ public function __construct()
 
 		while ($csvLine = fgetcsv($handle, 1000, ",")) {
 			$count++;
+			$itemCount=count($csvLine);
 			if($csvLine[0]=="Building Totals") {
 				//Building Totals shows that units are done
 				$startParse = false;
 			}
-			if($count==2) {
+			if($csvLine[0]=='For the Period' && $count==2 && $itemCount>3) {
 				$periodDate = $csvLine[3];			
 			}			
 			if($count==3) {
@@ -81,7 +82,7 @@ public function __construct()
 				$propertyAddress = $csvLine[1];  //This is the address off of the CSV file		
 				$property = Property::where('address',$csvLine[1])->where('company_id',$this->user->company_id)->first();
 			}
-			if($startParse) {
+			if($startParse && $itemCount > 3) {
 				///////////////////////////////
 				// When $startParse=true     //
 				// $csvLine[0] = UNIT        //
@@ -119,9 +120,22 @@ public function __construct()
             				'Action' => "Create new unit", 
             				'Tenant' => $csvLine[2],
             				'Rent' => $csvLine[3],
+            				'read' => true,
             				);
 			    	//"New Unit: " . $csvLine[0] . " Tenant: " . $csvLine[2] . " Rent: " . $csvLine[3];
 			    }
+			} else if($startParse && $itemCount > 0) {
+				$wholeLine="";
+				foreach($csvLine as $line) {
+					$wholeLine =  $wholeLine . $line . ",";
+				}
+			    $changes[$csvLine[0]."NEWUNIT"] = array(
+			        'Unit' => $wholeLine, 
+            		'Action' => "Not proper format", 
+            		'Tenant' => '',
+           			'Rent' => '',
+           			'read' => false,
+         		); 
 			}
 			if($csvLine[0]=="Unit No") {
 				$startParse = true;
@@ -148,6 +162,8 @@ public function __construct()
 
 		while ($csvLine = fgetcsv($handle, 1000, ",")) {
 			$count++;
+			$itemCount=count($csvLine);
+
 			if($csvLine[0]=="Building Totals") {
 				$startParse = false;
 			}
@@ -168,7 +184,7 @@ public function __construct()
 			        $property->save();
 				}
 			}
-			if($startParse) {
+			if($startParse && $itemCount > 3) {
 			    $device = Device::where('property_id',$property->id)->where('location',$csvLine[0])->first();
 			    if(count($device)>0) {
 			    	if($device->resident_name!=$csvLine[2] && \Input::has($csvLine[0]."TENANT")) {
