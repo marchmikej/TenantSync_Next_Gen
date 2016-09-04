@@ -13,7 +13,6 @@
 			<table class="table">
 			  <thead class="thead-default">
 			    <tr>
-			      <th>Status</th>
 			      <th>Start Date</th>
 			      <th>Remaining Payments</th>
 			      <th>Reference Number</th>
@@ -27,9 +26,14 @@
 			  @foreach($devices as $device)
 			  	@foreach ($device->autoPayments as $autoPayment)
     				<tr>
-				      <td>Still Working On</td>
 				      <td>{{$autoPayment->initial_date}}</td>
-				      <td>{{$autoPayment->num_payments}}</td>
+				      <td>
+				      @if($autoPayment->num_payments!=-1)
+				      	{{$autoPayment->num_payments}}</td>
+				      @else
+				        Indefinite
+				      @endif
+				  	  </td>
 				      <td>{{$autoPayment->customer_number}}</td>
 				      <td>{{$autoPayment->device()->address()}}</td>
 				      <td>{{$autoPayment->schedule}}</td>

@@ -30,7 +30,9 @@ class AutoPayment extends Model {
 		'amount', 
 		'transaction_fee', 
 		'payment_type',
-		'description'
+		'description',
+		'status',
+		'payments_processed',
 	];
 
 	public function device()

@@ -8,10 +8,12 @@ use TenantSync\Models\UserProperty;
 use TenantSync\Models\OverdueUsage;
 use TenantSync\Models\OverdueType;
 use TenantSync\Models\Property;
+use TenantSync\Models\Transaction;
 use TenantSync\Models\User;
 use App\Http\Controllers\Auth;
 use TenantSync\Mutators\PropertyMutator;use Response;
 
+use Carbon\Carbon;
 use DB;
 use Mail;
 
@@ -25,8 +27,24 @@ public function __construct()
 
 	public function home()
     {
+        if($this->user->company_id>0) {
+            //Get payments from last 30 days
+            $numberPayments = Transaction::where('company_id',$this->user->company_id)->where('date', '>', Carbon::now()->subDays(30))->count();
+            $paymentSum = Transaction::where('company_id',$this->user->company_id)->where('date', '>', Carbon::now()->subDays(30))->sum('amount');
+            $numberOfUnits = count($this->user->companyDevices());
+            $autoPayments = Transaction::where('company_id',$this->user->company_id)->where('auto_payment_id','>',0)->where('date', '>', Carbon::now()->subDays(30))->count();
+            //return $test;
+            $overview=array(
+                'number_payments' => $numberPayments,
+                'payment_sum' => $paymentSum,
+                'number_of_units' => $numberOfUnits,
+                'auto_payments' => $autoPayments,
+            );
+        } else {
+            $overview=array();
+        }
     	// Base resident view
-		return view('TenantSync::resident.index');		
+		return view('TenantSync::resident.index', compact('overview'));		
     }
 
 	public function displayResidents($id)

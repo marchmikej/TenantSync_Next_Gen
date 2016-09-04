@@ -188,6 +188,7 @@ public function __construct()
             'payment_from_source' => 0,   //If 0 it is from web if >0 then it is from that device
             'payment_type' => $this->input['payment_type'],
             'transaction_fee' => $transactionFee,
+            'company_id' => $device->getCompany(),
         ];
 
         $payment = Transaction::create($transaction);
@@ -317,7 +318,7 @@ public function __construct()
         $newAutoPayment->save();
 
         $message = array(
-            'message' => 'Auto Payemnt Scheduled.  Thank you!',
+            'message' => 'Auto Payment Scheduled.  Thank you!',
         );
         return view('TenantSync::resident/verify/message', compact('message')); 
     }

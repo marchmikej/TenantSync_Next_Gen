@@ -43,10 +43,16 @@ class AutoPaymentsGetNew extends Command
      */
     public function handle()
     {
-        $autoPayments=AutoPayment::get();
+        $autoPayments=AutoPayment::where('num_payments','<>',0)->get();
         foreach($autoPayments as $autoPayment) {
             echo "AutoPaymentsGetNew checking " . $autoPayment->id . "\n";
             $device=Device::find($autoPayment->device_id);
+
+            $numLeft = $device->getCustomer($autoPayment->customer_number);
+            echo "Payment remaining: " . $numLeft->NumLeft . "\n";
+
+            $autoPayment->num_payments=$numLeft->NumLeft;
+            $autoPayment->save();
 
             $response = $device->getCustomerHistory($autoPayment->customer_number);
 
@@ -82,7 +88,9 @@ class AutoPaymentsGetNew extends Command
                         'status' => $transaction->Response->Status, 
                         'payment_type' => $autoPayment->payment_type,
                         'transaction_fee' => $autoPayment->transaction_fee,
-                        'auto_payment_id' => $autoPayment->id
+                        'auto_payment_id' => $autoPayment->id,
+                        'propery_id' => $device->property_id,
+                        'company_id' => $device->getCompany(),
                         //'Result' => $transaction->Response->Result,
                         //'ErrorCode' => $transaction->Response->ErrorCode,
                         //'Error' => $transaction->Response->Error,

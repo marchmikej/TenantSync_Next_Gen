@@ -91,9 +91,9 @@ trait Billable {
 		return (new UsaEpayGateway($this->getKey(), $this->getPin()))->updatePaymentMethod($options);
 	}
 
-	public function getCustomer()
+	public function getCustomer($customerId)
 	{
-		return (new UsaEpayGateway($this->getKey(), $this->getPin()))->getCustomer($this->getCustomerId());
+		return (new UsaEpayGateway($this->getKey(), $this->getPin()))->getCustomer($customerId);
 	}
 
 	public function updateCustomer($options)
