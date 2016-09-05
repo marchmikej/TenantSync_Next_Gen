@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\UnPinDevice::class,
         \App\Console\Commands\GenerateRecurringTransactions::class,
         \App\Console\Commands\AutoPaymentsGetNew::class,
-        \App\Console\Commands\SendLandLordDailyTransactions::class,
+        \App\Console\Commands\SendLandlordDailyTransactions::class,
     ];
 
     /**

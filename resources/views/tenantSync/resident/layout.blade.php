@@ -3,14 +3,14 @@
 
 @section('topmenu')
 
-<li><a href="/resident/transactions">Transactions</a></li>
-<li><a href="/resident/deposits">Deposits</a></li>
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Payments</span></a>
     <ul class="dropdown-menu">
         <li><a href="/payment/choosepaymentlocation">One Time Payment</a></li>
         <li><a href="/autopay/choosepaymentlocation">Create Auto Payment</a></li>
         <li><a href="/autopay/viewautopayment">View Auto Payments</a></li>
+        <li><a href="/resident/transactions">Payments Received</a></li>
+		<li><a href="/resident/deposits">Payments Made</a></li>
     </ul>
 </li>
 @if(Auth::user()->company_id > 0)

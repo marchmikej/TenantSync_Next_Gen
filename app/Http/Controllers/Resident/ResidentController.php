@@ -33,6 +33,7 @@ public function __construct()
             $paymentSum = Transaction::where('company_id',$this->user->company_id)->where('date', '>', Carbon::now()->subDays(30))->sum('amount');
             $numberOfUnits = count($this->user->companyDevices());
             $autoPayments = Transaction::where('company_id',$this->user->company_id)->where('auto_payment_id','>',0)->where('date', '>', Carbon::now()->subDays(30))->count();
+            $transactions = Transaction::where('company_id',$this->user->company_id)->get();
             //return $test;
             $overview=array(
                 'number_payments' => $numberPayments,
@@ -42,9 +43,10 @@ public function __construct()
             );
         } else {
             $overview=array();
+            $transactions=array();
         }
     	// Base resident view
-		return view('TenantSync::resident.index', compact('overview'));		
+		return view('TenantSync::resident.index', compact('overview', 'transactions'));		
     }
 
 	public function displayResidents($id)

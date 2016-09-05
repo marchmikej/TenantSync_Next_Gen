@@ -5,9 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use TenantSync\Models\Device;
 use TenantSync\Models\User;
-use TenantSync\Models\AutoPayment;
 use TenantSync\Models\Transaction;
 use Mail;
 use Carbon\Carbon;
@@ -52,10 +50,11 @@ class SendLandlordDailyTransactions extends Command
             echo $incomingDate;
             echo "\n";
         }
-        $landlords=User::where('role','landlord')->get();
+        $landlords=User::where('company_id','>',0)->get();
         foreach($landlords as $landlord) {
-            $transactions=Transaction::where('date',$incomingDate)->where('user_id',$landlord->id)->get();
+            $transactions=Transaction::where('date',$incomingDate)->where('company_id',$landlord->company_id)->get();
             echo "SendLandlordDailyTransactions checking " . $landlord->id . "\n";
+            echo "Number of transactions: " . count($transactions)  . "\n";
             if(count($transactions)>0) {
                 Mail::send('emails.landlordpayments', ['transactions' => $transactions], function ($m) use ($landlord,$incomingDate) {
                     $m->from(env('SEND_EMAIL', 'admin@tenantsyncdev.com'), 'TenantSync');
