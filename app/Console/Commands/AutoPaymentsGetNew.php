@@ -46,6 +46,7 @@ class AutoPaymentsGetNew extends Command
         $autoPayments=AutoPayment::where('num_payments','<>',0)->get();
         foreach($autoPayments as $autoPayment) {
             echo "AutoPaymentsGetNew checking " . $autoPayment->id . "\n";
+            echo "AutoPaymentsGetNew customer " . $autoPayment->customer_number . "\n";
             $device=Device::find($autoPayment->device_id);
 
             $numLeft = $device->getCustomer($autoPayment->customer_number);
