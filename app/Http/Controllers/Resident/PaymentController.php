@@ -44,8 +44,7 @@ public function __construct()
         $paymentDetails = array(
             "property" => $id,
         );
-        $device=Device::find($id)->first();
-
+        $device=Device::find($id);
         return view('TenantSync::resident/payments/chooseamount', compact('paymentTypes', 'device'));    
     }
 
@@ -161,7 +160,6 @@ public function __construct()
         $transactionFee = 0;
 
         $device = Device::find($this->input['property']);
-
         if($this->input['payment_type']=='credit') {
             $this->input['expiration'] = $this->input['month'] . $this->input['year'];
             $transactionFee=$this->input['amount']*0.0345;
@@ -226,15 +224,16 @@ public function __construct()
 
         //Creating device/unit of the unit for this charge to be credited against
         $device = Device::find($this->input['property']);
-
         $amount = $this->input['amount'];
         $transactionFee = 0;
 
         //date format dd/mm/yyyy to yyyy-mm-dd
-        $autoMonth = substr($this->input['auto_date'],0,2);
-        $autoDay = substr($this->input['auto_date'],3,2);
-        $autoYear = substr($this->input['auto_date'],6,4);
-        $autoSend = $autoYear . "-" . $autoMonth . "-" . $autoDay;
+        //$autoMonth = substr($this->input['auto_date'],0,2);
+        //$autoDay = substr($this->input['auto_date'],3,2);
+        //$autoYear = substr($this->input['auto_date'],6,4);
+        //$autoSend = $autoYear . "-" . $autoMonth . "-" . $autoDay;
+
+        $autoSend = $this->input['auto_date'];
 
         // $payment array will hold payment information.  
 
@@ -305,7 +304,7 @@ public function __construct()
             'device_id' => $device->id,
             'customer_number' => $response,
             'schedule' => $this->input['Schedule'],
-            'initial_date' => Carbon::createFromFormat('m/d/Y', $this->input['auto_date']),
+            'initial_date' => $this->input['auto_date'],
             'num_payments' => $this->input['NumLeft'],
             'amount' => $amount,
             'transaction_fee' => $transactionFee,
@@ -339,7 +338,7 @@ public function __construct()
         //return view('TenantSync::resident/rentroll/readin', compact('autoPayments'));   
         
         $device=Device::find(99);
-        $response = $device->findCustomer('6137892');
+        $response = $device->findCustomer('6161652');
 
         $customerResponse = array(
             'CustNum' => $response->CustNum, 

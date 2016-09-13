@@ -75,6 +75,8 @@ Route::get('upload/home', '\App\Http\Controllers\Resident\UploadController@home'
 Route::post('upload/changerentroll', '\App\Http\Controllers\Resident\UploadController@makeRentRollChanges');
 Route::post('upload/rentroll', '\App\Http\Controllers\Resident\UploadController@rentRollSubmit');
 
+Route::get('resident/transactionsall', '\App\Http\Controllers\Resident\TransactionController@all');
+
 //Test stuff
 Route::get('resident/test', '\App\Http\Controllers\Resident\PaymentController@test');
 

@@ -10,7 +10,8 @@
 				<h4>Resident Emails</h4>
 			</div>
 
-			<table class="table">
+      <div class="table-responsive">
+			<table class="table table-striped">
 			  <thead class="thead-default">
 			    <tr>
 			      <th>Location</th>
@@ -30,7 +31,7 @@
 					@endforeach
 			  </tbody>
 			</table>
-			
+			</div>
 		</div>
 	</div>
 </div>

@@ -32,4 +32,9 @@ public function __construct(TransactionMutator $transactionMutator)
         $devices = $this->user->companyDevices();
 		return view('TenantSync::resident.transactions.index', compact('devices'));	
     }
+
+    public function all()
+    {
+        return $this->user->company()->transactions;
+    }
 }  

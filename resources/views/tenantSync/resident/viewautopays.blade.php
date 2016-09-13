@@ -10,7 +10,8 @@
 				<h4>Auto Payments</h4>
 			</div>
 
-			<table class="table">
+      <div class="table-responsive">
+			<table class="table table-striped">
 			  <thead class="thead-default">
 			    <tr>
 			      <th>Start Date</th>
@@ -44,7 +45,7 @@
 				@endforeach
 			  </tbody>
 			</table>
-			
+			</div>
 		</div>
 	</div>
 </div>

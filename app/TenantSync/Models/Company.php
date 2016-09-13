@@ -10,4 +10,9 @@ class Company extends Model
     	'name',
     ];
 
+    public function transactions()
+	{
+		return $this->hasMany('TenantSync\Models\Transaction');
+	}
+
 }

@@ -19,12 +19,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-3">Auto Pay Date</label>
 					<div class="col-sm-4">
-						<div class="input-group date" data-provide="datepicker">
-    						<input type="text" class="form-control" name="auto_date">
-    						<div class="input-group-addon">
-        						<span class="glyphicon glyphicon-th"></span>
-    						</div>
-    					</div>
+						<input type="date" name="auto_date">
 					</div>
 				</div>
 				<div class="form-group">

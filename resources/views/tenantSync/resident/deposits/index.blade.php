@@ -9,8 +9,8 @@
 			<div class="card-header">
 				<h4>Deposits</h4>
 			</div>
-
-			<table class="table">
+      <div class="table-responsive">
+			<table class="table table-striped">
 			  <thead class="thead-default">
 			    <tr>
 			      <th>Initiated Date</th>
@@ -48,6 +48,7 @@
 			</table>
 			
 		</div>
+	</div>
 	</div>
 </div>
 @endsection

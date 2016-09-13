@@ -5,23 +5,22 @@
 <div id="profile" class="row card" v-cloak>
 
 	<div class="col-sm-12">
-		<div>
 			<div class="card-header">
 				<h4>Transactions</h4>
 			</div>
-
-			<table class="table">
+      <div class="table-responsive">
+			<table class="table table-striped">
 			  <thead class="thead-default">
 			    <tr>
-			      <th>Initiated Date</th>
-			      <th>Address</th>
-			      <th>Resident</th>
-			      <th>Payment For</th>
-			      <th>Amount</th>
-			      <th>Type</th>
-			      <th>Status</th>
-			      <th>Reference Number</th>
-			      <th>Auto Payment</th>
+			      <th class="col-sm-1">Initiated Date</th>
+			      <th class="col-sm-2">Address</th>
+			      <th class="col-sm-2">Resident</th>
+			      <th class="col-sm-2">Payment For</th>
+			      <th class="col-sm-1">Amount</th>
+			      <th class="col-sm-1">Type</th>
+			      <th class="col-sm-1">Status</th>
+			      <th class="col-sm-1">Reference Number</th>
+			      <th class="col-sm-1">Auto Payment</th>
 			    </tr>
 			  </thead>
 			  	<tbody>
@@ -29,19 +28,21 @@
 				  		@foreach ($device->transactions as $transaction)
 					  		@foreach ($transaction->getTypesArrary() as $key => $value)
 		    				<tr>
-						      	<td>{{$transaction->date}}</td>
-						      	<td>{{$transaction->address()}}</td>
-						      	<td>{{$transaction->getUser()->last_name . ", " . $transaction->getUser()->first_name . " " . $transaction->getUser()->middle_initial}}</td>
-						      	<td>{{$key}}</td>
-						      	<td>{{money_format("$%i",$value)}}</td>
-						      	<td>{{$transaction->payment_type}}
-						      	<td>{{$transaction->status}}</td>
-						      	<td>{{$transaction->reference_number}}</td>
+						      	<td class="col-sm-1">{{$transaction->date}}</td>
+						      	<td class="col-sm-2">{{$transaction->address()}}</td>
+						      	<td class="col-sm-2">{{$transaction->getUser()->last_name . ", " . $transaction->getUser()->first_name . " " . $transaction->getUser()->middle_initial}}</td>
+						      	<td class="col-sm-2">{{$key}}</td>
+						      	<td class="col-sm-1">{{money_format("$%i",$value)}}</td>
+						      	<td class="col-sm-1">{{$transaction->payment_type}}
+						      	<td class="col-sm-1">{{$transaction->status}}</td>
+						      	<td class="col-sm-1">{{$transaction->reference_number}}</td>
+						      	<td class="col-sm-1">
 						      	@if ($transaction->auto_payment_id>0) 
-							      	<td>Yes</td>
+							      	Yes
 							    @else
-								    <td>No</td>
+								    No
 							    @endif
+								</td>
 					    	</tr>
 					    	@endforeach
 					    @endforeach
@@ -49,6 +50,7 @@
 			  </tbody>
 			</table>	
 		</div>
-	</div>
+</div>
 </div>
 @endsection
+
