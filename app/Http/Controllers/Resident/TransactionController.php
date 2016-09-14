@@ -27,10 +27,47 @@ public function __construct(TransactionMutator $transactionMutator)
         $this->middleware('auth');
     }
 
-	public function home()
-    {
-        $devices = $this->user->companyDevices();
-		return view('TenantSync::resident.transactions.index', compact('devices'));	
+    public function home() {
+        $searchArray = array(
+            'search' => 'NOSEARCH',
+            'start_date' => 'NODATE',
+            'end_date' => 'NODATE'
+        ); 
+        $transactions = Transaction::where('company_id',$this->user->company_id)->orderBy('date', 'desc')->get();   
+        return view('TenantSync::resident.transactions.index', compact('transactions', 'searchArray'));    
+    }
+
+	public function homeSearch()
+    {  
+        $searchArray = array(
+            'search' => 'NOSEARCH',
+            'start_date' => 'NODATE',
+            'end_date' => 'NODATE'
+        ); 
+        if($this->input['start_date']!=NULL && $this->input['end_date']!=NULL) {
+            $transactions = Transaction::where('company_id',$this->user->company_id)
+                ->where('date','>=',$this->input['start_date'])
+                ->where('date','<=',$this->input['end_date'])
+                ->orderBy('date', 'desc')->get();
+            $searchArray['start_date'] = $this->input['start_date'];
+            $searchArray['end_date'] = $this->input['end_date'];
+        } else if($this->input['start_date']!=NULL) {
+            $transactions = Transaction::where('company_id',$this->user->company_id)
+                ->where('date','>=',$this->input['start_date'])
+                ->orderBy('date', 'desc')->get();
+            $searchArray['start_date'] = $this->input['start_date'];
+        } else if($this->input['end_date']!=NULL) {
+            $transactions = Transaction::where('company_id',$this->user->company_id)
+                ->where('date','<=',$this->input['end_date'])
+                ->orderBy('date', 'desc')->get();
+            $searchArray['end_date'] = $this->input['end_date'];
+        } else {
+            $transactions = Transaction::where('company_id',$this->user->company_id)->orderBy('date', 'desc')->get();   
+        }
+        if($this->input['search']!=NULL) {
+            $searchArray['search'] = $this->input['search'];
+        }
+		return view('TenantSync::resident.transactions.index', compact('transactions', 'searchArray'));	
     }
 
     public function all()

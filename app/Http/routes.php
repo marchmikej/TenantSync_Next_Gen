@@ -36,6 +36,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\AuthController@getLogout');
 //Resident login
 Route::get('resident/home', '\App\Http\Controllers\Resident\ResidentController@home');
 Route::get('resident/transactions', '\App\Http\Controllers\Resident\TransactionController@home');
+Route::post('resident/transactions', '\App\Http\Controllers\Resident\TransactionController@homeSearch');
 Route::get('resident/deposits', '\App\Http\Controllers\Resident\DepositController@home');
 Route::get('resident/properties', '\App\Http\Controllers\Resident\PropertyController@home');
 Route::get('resident/devices/{id}', '\App\Http\Controllers\Resident\DeviceController@home');

@@ -218,4 +218,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     	//return $this->hasOne('TenantSync\Models\Company');
     	return Company::where('id',$this->company_id)->first();
     }
+
+    public function fullName() {
+    	return $this->last_name . ", " . $this->first_name . " " . $this->middle_initial;
+    }
 }
