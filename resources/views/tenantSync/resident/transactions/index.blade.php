@@ -10,7 +10,7 @@
 		<div class="col-sm-4">
 			Address/Resident:
 			@if($searchArray['search']!='NOSEARCH')
-				<input type="text" name="search" placeholder="{{$searchArray['search']}}">
+				<input type="text" name="search" value="{{$searchArray['search']}}">
 			@else
 				<input type="text" name="search" placeholder="search..">
 			@endif
@@ -54,7 +54,7 @@
 			      <th class="col-sm-1">Initiated Date</th>
 			      <th class="col-sm-2">Address</th>
 			      <th class="col-sm-2">Resident</th>
-			      <th class="col-sm-2">Payment For</th>
+			      <th class="col-sm-2">Payment Type</th>
 			      <th class="col-sm-1">Amount</th>
 			      <th class="col-sm-1">Type</th>
 			      <th class="col-sm-1">Status</th>

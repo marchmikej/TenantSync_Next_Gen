@@ -221,8 +221,8 @@ class UsaEpayGateway {
 			'Enabled'=>true,
 			'Amount'=>'2.93',
 			'Tax'=>'0',
-			'Next'=>'2016-08-16',
-			'Notes'=>'Testing the soap addCustomer Function',
+			'Next'=>'2016-09-15',
+			'Notes'=>'Trying to get auto payments working again',
 			'NumLeft'=>'5',
 			'OrderID'=>'',
 			'ReceiptNote'=>'addCustomer test Created Charge',
@@ -230,6 +230,8 @@ class UsaEpayGateway {
 			'SendReceipt'=>false,
 			'Source'=>'Recurring',
 			'User'=>''
-		);*/
+		);
+		return $this->gateway->addCustomer($token,$CustomerData); 
+		*/
 	}
 }

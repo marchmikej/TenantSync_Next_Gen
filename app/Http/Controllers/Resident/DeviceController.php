@@ -32,6 +32,15 @@ public function __construct()
 		return view('TenantSync::resident.device', compact('properties'));
     }
 
+    public function viewDevice($id) {
+        $device = Device::find($id);
+        \JavaScript::put([
+            'device' => $device,
+            'deviceMessages' => $device->messages,
+        ]);
+        return view('TenantSync::resident/devices/viewdevice', compact('device'));
+    }
+
     public function createDeviceForm() {
     	$properties=Property::where('company_id',$this->user->company_id)->get();
         return view('TenantSync::resident/devices/createdevice', compact('properties'));

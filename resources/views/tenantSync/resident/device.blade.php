@@ -24,7 +24,7 @@
 			  	@foreach ($properties as $property)
 				  	@foreach ($property->devices as $device)
 	    				<tr>
-					      <td><a href="/resident/residents/{{$device->id}}">{{$device->address()}}</a></td>
+					      <td><a href="/resident/device/{{$device->id}}">{{$device->address()}}</a></td>
 					      <td>{{$device->location}}</td>
 					      <td>{{money_format("$%i",$device->rent_amount)}}</td>
 					      <td>{{$device->resident_name}}</td>

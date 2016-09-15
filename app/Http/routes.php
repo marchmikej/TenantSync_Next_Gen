@@ -40,6 +40,7 @@ Route::post('resident/transactions', '\App\Http\Controllers\Resident\Transaction
 Route::get('resident/deposits', '\App\Http\Controllers\Resident\DepositController@home');
 Route::get('resident/properties', '\App\Http\Controllers\Resident\PropertyController@home');
 Route::get('resident/devices/{id}', '\App\Http\Controllers\Resident\DeviceController@home');
+Route::get('resident/device/{id}', '\App\Http\Controllers\Resident\DeviceController@viewDevice');
 Route::get('resident/residents/{id}', '\App\Http\Controllers\Resident\ResidentController@displayResidents');
 Route::get('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createPropertyForm');
 Route::post('resident/newproperty', '\App\Http\Controllers\Resident\PropertyController@createProperty');
