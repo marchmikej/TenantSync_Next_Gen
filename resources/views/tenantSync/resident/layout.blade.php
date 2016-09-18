@@ -6,11 +6,15 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Payments</span></a>
     <ul class="dropdown-menu">
+@if(Auth::user()->company_id == 0)
         <li><a href="/payment/choosepaymentlocation">One Time Payment</a></li>
         <li><a href="/autopay/choosepaymentlocation">Create Auto Payment</a></li>
-        <li><a href="/autopay/viewautopayment">View Auto Payments</a></li>
-        <li><a href="/resident/transactions">Payments Received</a></li>
 		<li><a href="/resident/deposits">Payments Made</a></li>
+@endif
+        <li><a href="/autopay/viewautopayment">Auto Payments</a></li>
+@if(Auth::user()->company_id > 0)
+        <li><a href="/resident/transactions">Payments Received</a></li>
+@endif
     </ul>
 </li>
 @if(Auth::user()->company_id > 0)
@@ -29,10 +33,10 @@
         </ul>
     </li>    
 	<li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Residents</span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Approvals</span></a>
         <ul class="dropdown-menu">
-            <li><a href="/resident/residents/0">View Resident Emails</a></li>
-            <li><a href="/resident/newresident">Add Resident Email</a></li>
+            <li><a href="/resident/residents/0">View Approval Emails</a></li>
+            <li><a href="/resident/newresident">Add Approval Email</a></li>
         </ul>
     </li>
 @endif

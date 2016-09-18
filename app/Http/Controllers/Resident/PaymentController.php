@@ -338,7 +338,7 @@ public function __construct()
         //return view('TenantSync::resident/rentroll/readin', compact('autoPayments'));   
         
         $device=Device::find(95);
-        $response = $device->findCustomer('6172152');
+        $response = $device->findCustomer('6164742');
 
         $customerResponse = array(
             'CustNum' => $response->CustNum, 
@@ -352,7 +352,7 @@ public function __construct()
             'SendReceipt' => $response->SendReceipt,
             'PaymentMethods' => $response->PaymentMethods,
             'Amount' => $response->Amount); 
-       return $customerResponse;
+       return $customerResponse['PaymentMethods'];
         //6102639 customer num
         /*
         $paymentResponse = array(
