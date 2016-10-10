@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\GenerateRecurringTransactions::class,
         \App\Console\Commands\AutoPaymentsGetNew::class,
         \App\Console\Commands\SendLandlordDailyTransactions::class,
+        \App\Console\Commands\GetTransactionStatus::class,
     ];
 
     /**
