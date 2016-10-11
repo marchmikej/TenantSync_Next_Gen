@@ -74,7 +74,7 @@ class UpdatePendingTransactions extends Command
                 echo "Result: " . $paymentResponse['Result'] . "\n";
                 echo "----------------------------------\n";
 
-                if($response->Status != 'Pending') {
+                if($response->Status == 'Settled') {
                     echo $transaction->reference_number . "is now" .  $response->Status . "\n";
                     $transaction->status = $response->Status;
                     $transaction->save();

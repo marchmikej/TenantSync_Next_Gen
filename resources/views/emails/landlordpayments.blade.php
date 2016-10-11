@@ -17,6 +17,7 @@
 			    <tr>
 			    	<th>Reference Number</th>
 			    	<th>Date</th>
+			    	<th>Status</th>
 			    	<th>Tenant/Owner</th>
 			    	<th>Property</th>
 			      	<th>Payment Description</th>
@@ -30,6 +31,7 @@
 				  		<tr>
 				  			<td>{{$transaction->reference_number}}</td>
 				  			<td>{{$transaction->date}}</td>
+				  			<td>{{$transaction->status}}</td>
 				  			<td>{{$transaction->getUser()->last_name . ", " . $transaction->getUser()->first_name}}</td>
 				  			<td>{{$transaction->address()}}</td>
 				  			<td>{{$key}}</td>
