@@ -47,7 +47,7 @@ class GetTransactionStatus extends Command
         $device=Device::find($transaction->payable_id);
         $response = $device->getTransactionStatus($this->argument('incomingTransaction'));
 
-        echo "hello Mike\n";
+        echo "GetTransactionStatus Starting.\n";
 
         $paymentResponse = array(
             'RefNum' => $response->RefNum, 
