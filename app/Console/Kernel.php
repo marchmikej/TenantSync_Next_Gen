@@ -42,6 +42,6 @@ class Kernel extends ConsoleKernel
         //$schedule->command('command:UpdateDeviceAlarms')->dailyAt('18:44');
         //$schedule->command('command:GenerateRecurringTransactions')->daily();
         $schedule->command('command:SendLandLordDailyTransactions yesterday')->daily();
-        $schedule->command('command:AutoPaymentsGetNew')->daily();
+        $schedule->command('command:UpdatePendingTransactions')->daily();
     }
 }

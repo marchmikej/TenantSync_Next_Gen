@@ -86,7 +86,7 @@ class AutoPaymentsGetNew extends Command
                         'payable_id' => $device->id,
                         'payment_from_id' => $autoPayment->user_id,
                         'payment_from_source' => 0,
-                        'status' => $transaction->Response->Status, 
+                        'status' => 'Pending', 
                         'payment_type' => $autoPayment->payment_type,
                         'transaction_fee' => $autoPayment->transaction_fee,
                         'auto_payment_id' => $autoPayment->id,
