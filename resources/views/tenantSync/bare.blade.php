@@ -41,7 +41,7 @@
 					</button>
 					@endif
 
-				  	<a class="navbar-brand p-r-md" href="/"><img src="/images/logo.png" alt="PayPro"/>PayPro.Rent</a>
+				  	<a class="navbar-brand p-r-md" href="/"><img src="/images/logo.png" alt="PayPro"/></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->

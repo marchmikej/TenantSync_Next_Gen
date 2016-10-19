@@ -38,7 +38,8 @@ class Device extends Model {
 		'monthly_cost', 
 		'contact_name', 
 		'contact_phone',
-		'resident_name'
+		'resident_name',
+		'additional_charges'
 	];
 
 	/**
@@ -69,6 +70,10 @@ class Device extends Model {
 
 	public function autoPayments() {
 		return $this->hasMany('TenantSync\Models\AutoPayment');
+	}
+
+	public function additionalCharges() {
+		return $this->hasMany('TenantSync\Models\AdditionalCharge');
 	}
 
 	public function maintenanceRequests()

@@ -120,6 +120,12 @@
 				<label class="control-label col-sm-3">Rent</label>
 				<label class="control-label col-sm-9">{{money_format("$%i",$device->rent_amount)}}</label>
 			</div>
+			@foreach($device->additionalCharges as $additionalCharge)
+				<div class="form-group">
+					<label class="control-label col-sm-3">{{$additionalCharge->payment_type}}</label>
+					<label class="control-label col-sm-9">{{money_format("$%i",$additionalCharge->amount)}}</label>
+				</div>
+			@endforeach
 			<div class="form-group">
 				<label class="control-label col-sm-3">Resident</label>
 				<label class="control-label col-sm-9">{{$device->resident_name}}</label>

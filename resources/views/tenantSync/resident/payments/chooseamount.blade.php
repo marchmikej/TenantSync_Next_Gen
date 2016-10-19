@@ -10,14 +10,23 @@
 				<h4>Payment Amount</h4>
 			</div>
 			<h3>Monthly Rent: {{money_format("$%i",$device->rent_amount)}}</h3>
+			@foreach($device->additionalCharges as $additionalCharge)
+				<h3>{{$additionalCharge->payment_type}}: {{money_format("$%i",$additionalCharge->amount)}}</h3>
+			@endforeach
 			<form class="form form-horizontal" action="choosepaymentmethod" method="POST">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<input type="hidden" name="property" value="{{$device->id}}">
-				@foreach ($paymentTypes as $paymentType)				
+				<div class="form-group">
+					<label class="control-label col-sm-3">Rent</label>
+					<div class="col-sm-9">
+						<input class="form-control" type="numeric" name="Rent" placeholder="0"/>
+					</div>
+				</div>				
+				@foreach ($device->additionalCharges as $additionalCharge)				
 					<div class="form-group">
-						<label class="control-label col-sm-3">{{$paymentType->payment_type}}</label>
+						<label class="control-label col-sm-3">{{$additionalCharge->payment_type}}</label>
 						<div class="col-sm-9">
-							<input class="form-control" type="numeric" name="{{$paymentType->payment_type}}" placeholder="0"/>
+							<input class="form-control" type="numeric" name="{{$additionalCharge->payment_type}}" placeholder="0"/>
 						</div>
 					</div>
 				@endforeach

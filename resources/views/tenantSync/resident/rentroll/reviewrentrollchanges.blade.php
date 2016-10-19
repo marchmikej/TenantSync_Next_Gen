@@ -28,7 +28,7 @@
 				      <th>Unit</th>
 				      <th>Action</th>
 				      <th>Tenant</th>
-				      <th>Rent</th>
+				      <th>Cost</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -36,13 +36,13 @@
 		    			<tr>
 		    			  <td>
 		    			  @if($value['read']==true)
-						      <input checked type="checkbox" name="{{$key}}" value="PERFORM">
+						      <input checked type="checkbox" name="{{$key}}" id="{{$value['Unit']}}" value="PERFORM">
 						  @endif
 						  </td>
 					      <td>{{$value['Unit']}}</td>
 					      <td>{{$value['Action']}}</td>
 					      <td>{{$value['Tenant']}}</td>
-					      <td>{{$value['Rent']}}</td>
+					      <td>{{$value['Cost']}}</td>
 				    	</tr>
 					@endforeach
 				  </tbody>

@@ -50,8 +50,9 @@ public function __construct()
 
     public function choosePaymentMethod()
     {   
-        $paymentTypes = DB::table('payment_types')
-        ->get();
+        $paymentTypes = DB::table('additional_charges')
+            ->where('device_id',$this->input['property'])
+            ->get();
         $paymentAmount = 0;
         $paymentFor = "";
         $paymentFor=array();
@@ -63,6 +64,13 @@ public function __construct()
                 }
             }
         }   
+
+        if(isset($this->input["Rent"])) {  
+            if($this->input["Rent"]>0) {  
+                $paymentAmount = $paymentAmount + $this->input["Rent"];
+                $paymentFor["Rent"] = $this->input["Rent"];
+            }
+        }
 
         $transactionFeeCredit = $paymentAmount * .0345;
         $transactionFeeBank = 3.45;

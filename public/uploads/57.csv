@@ -1,0 +1,74 @@
+Rent Roll,Menu ID,RR
+For the Period,September 2016,Printed,9/1/2016
+2186 Cruger Avenue Apartment Corp.,2186 Cruger Avenue
+Building No:,2186C
+Unit No,Unit Desc,Tenant,Rent,Chg Cd,Other Charges,Amt Billed,Move-in Date,Lease Terms,Date Vacated,Status Codes,Security Deposit
+1A, ,"Srdanovic, Alen",714.32,14,ASSESSMENT,67.00,01/01/15,    , ,i - INVESTOR, 
+1C, ,"Forde, Ronald",714.32,14,ASSESSMENT,67.00,01/01/15,    , ,o - OWNER, 
+1D, ,"Sevgin, Mesur","1,007.52",14,ASSESSMENT,94.50,01/01/15,    , ,o - OWNER, 
+1E, ,"Perez, Aristides A.",714.32,14,ASSESSMENT,67.00,01/01/15,    , ,o - OWNER, 
+1F, ,"Salazar, Max Armando",890.24,14,ASSESSMENT,83.50,12/01/15,    , ,o - OWNER, 
+1G, ,"Mendez, Edward",890.24,14,ASSESSMENT,83.50,01/01/15,    , ,o - OWNER, 
+1J, ,"Aguilar, Andrea","1,007.52",14,ASSESSMENT,94.50,01/01/15,    , ,o - OWNER, 
+1K, ,"Brown, Warner",714.32,14,ASSESSMENT,67.00,01/01/15,    , ,o - OWNER, 
+1L, ,"Leon, Miriam",890.24,14,ASSESSMENT,83.50,01/01/15,    , ,o - OWNER, 
+2C, ,"Valencia, Eliecer",724.98,14,ASSESSMENT,68.00,01/01/15,    , ,o - OWNER, 
+2D, ,"Garro, Miguel","1,018.17",14,ASSESSMENT,95.50,01/01/15,    , ,o - OWNER, 
+2E, ,"Figueroa, Jacinto",724.98,14,ASSESSMENT,68.00,01/01/15,    , ,o - OWNER, 
+2G, ,"Cruz, Grey",900.89,14,ASSESSMENT,84.50,01/01/15,    , ,o - OWNER, 
+2H, ,"Tighe, Martin",724.98,14,ASSESSMENT,68.00,01/01/15,    , ,i - INVESTOR, 
+2J, ,"David, Miguel","1,018.17",14,ASSESSMENT,95.50,01/01/15,    , ,o - OWNER, 
+17,SUBLET FEE,100.00
+2K, ,VACANT, ,    ,12/01/15,o - OWNER, 
+3A, ,"Mendez,Edward",735.65,14,ASSESSMENT,69.00,04/04/16,    , ,o - OWNER, 
+3B, ,"Vega, Jorge",735.65,14,ASSESSMENT,69.00,01/01/15,    , ,o - OWNER, 
+3C, ,"Srdanovic, Damir",735.65,14,ASSESSMENT,69.00,01/01/15,    , ,i - INVESTOR, 
+3D, ,"Torres, Jose","1,028.84",14,ASSESSMENT,95.50,01/01/15,    , ,o - OWNER, 
+3E, ,"Nnadozie, Okeke",785.65,14,ASSESSMENT,69.00,01/01/15,    , ,i - INVESTOR, 
+3F, ,"Jones, Catrina",911.56,14,ASSESSMENT,85.50,01/01/15,    , ,o - OWNER, 
+3G, ,"Larimer, Brooke E. Willis",911.56,14,ASSESSMENT,85.50,10/01/15,    , ,o - OWNER, 
+3H, ,"Lamaj, Besnik",735.65,14,ASSESSMENT,69.00,01/01/15,    , ,o - OWNER, 
+3J, ,"Marte, Dionisio","1,028.84",14,ASSESSMENT,96.50,01/01/15,    , ,o - OWNER, 
+3L, ,"Polanco, Emmanuel",911.56,14,ASSESSMENT,85.50,01/01/15,    , ,o - OWNER, 
+4D, ,"Zelaya, Exidio","1,039.50",14,ASSESSMENT,97.50,01/01/15,    , ,o - OWNER, 
+4E, ,"Dervisoska, Gluten",796.30,14,ASSESSMENT,70.00,01/01/15,    , ,i - INVESTOR, 
+4F, ,"Willis,Jermaine",922.22,14,ASSESSMENT,86.50,01/01/15,    , ,o - OWNER, 
+4G, ,"Lachman, Mohini",922.22,14,ASSESSMENT,86.50,01/01/15,    , ,o - OWNER, 
+4H, ,"Dela Cruz, Jose",746.30,14,ASSESSMENT,70.00,01/01/15,    , ,o - OWNER, 
+1,PARKING FEE,125.00
+4J, ,"Valerio, Rubi M.","1,039.50",14,ASSESSMENT,97.50,01/01/15,    , ,o - OWNER, 
+4K, ,"Reittie, Ian",746.30,14,ASSESSMENT,70.00,01/01/15,    , ,i - INVESTOR, 
+4L, ,"Gomez, Gilbert",922.22,14,ASSESSMENT,86.50,01/01/15,    , ,o - OWNER, 
+5D, ,"Boyd, Willie","1,050.16",14,ASSESSMENT,98.50,01/01/15,    , ,o - OWNER, 
+5G, ,"Buchanan, Rosalie",932.88,14,ASSESSMENT,87.50,01/01/15,    , ,o - OWNER, 
+5H, ,"Narod, Irina",710.05,14,ASSESSMENT,71.00,01/01/15,    , ,i - INVESTOR, 
+5J, ,"Acosta, Nanzy","1,050.16",14,ASSESSMENT,98.50,01/01/15,    , ,o - OWNER, 
+5K, ,"Dervisoski, Sutka",806.97,14,ASSESSMENT,71.00,01/01/15,    , ,i - INVESTOR, 
+5L, ,"Jefferson, John",932.88,14,ASSESSMENT,87.50,05/01/16,    , ,o - OWNER, 
+LA, ,"Dockery, Chloris",700.99,14,ASSESSMENT,65.75,01/01/15,    , ,o - OWNER, 
+LC, ,"Cabrera, Margarita",700.99,14,ASSESSMENT,65.75,01/01/15,    , ,o - OWNER, 
+LD, ,"Valdez, Adalisis",997.19,14,ASSESSMENT,93.25,01/01/15,    , ,o - OWNER, 
+LE, ,"Alvarez, J.",700.99,14,ASSESSMENT,65.75,01/01/15,    , ,i - INVESTOR, 
+LF, ,"Gumban, Corazon",511.75,14,ASSESSMENT,48.00,01/01/15,    , ,i - INVESTOR, 
+LG, ,"Mulero, Jason",511.75,10,STORAGE,150.00,01/01/15,    , ,o - OWNER, 
+14,ASSESSMENT,48.00
+LJ, ,"Pupovic, Hakija",994.19,14,ASSESSMENT,93.25,01/01/15,    , ,o - OWNER, 
+LL, ,"Delarosa, Magdita",876.92,14,ASSESSMENT,82.25,01/01/15,    , ,o - OWNER, 
+LM, ,"Heath, Mariam",700.99,14,ASSESSMENT,65.75,01/01/15,    , ,o - OWNER, 
+K&KRIM, ,Cruger Holland Ass Krim& Krim,"19,005.31",09/01/13,    , ,p - SPONSER, 
+BSMNT, ,"Hernandez, Felix","1,300.00",01/01/15,02/01/15 01/31/16 , , , 
+PKG, ,SCOTTIE,1,PARKING FEE,150.00,01/01/15,    , , , 
+4B, ,"HM1, LLC",746.30,14,ASSESSMENT,70.00,09/16/15,    , ,i - INVESTOR, 
+Building Totals
+2186 Cruger Avenue Apartment Corp.
+Building:
+2186C,Charge Code,Charge Description,Total Billed
+Units:,53,52 Occupied,1 Vacant,0,*MAINT CHG,"61,540.85"
+1,PARKING FEE,275.00
+Rooms:,0
+10,STORAGE,150.00
+*Rent:,"61,540.85"
+14,ASSESSMENT,"3,856.75"
+Other Charges:,"4,381.75",Building Totals,"65,822.60"
+Security:,0.00
+* All charges totalling to rent are indicated with an asterisk
